@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="#1B1919">
+        <ImageView
+            android:id="@+id/iv_imagen_concierto"
+            android:layout_width="match_parent"
+            android:layout_height="450dp">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/tv_artista"
+            android:layout_width="wrap_content"
+            android:layout_height="50sp"
+            android:textSize="15sp"
+            android:padding="10dp"
+            android:textColor="#FFFFFF">
+        </TextView>
+        <TextView
+            android:id="@+id/tv_fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="50sp"
+            android:textSize="15sp"
+            android:padding="10dp"
+            android:textColor="#FFFFFF">
+        </TextView>
+        <TextView
+            android:id="@+id/tv_lugar"
+            android:layout_width="wrap_content"
+            android:layout_height="50sp"
+            android:textSize="15sp"
+            android:padding="10dp"
+            android:textColor="#FFFFFF">
+        </TextView>
+        <Button
+            android:id="@+id/btn_entradas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="COMPRAR ENTRADAS"
+            android:textStyle="bold|normal"
+            android:padding="10dp">
+        </Button>
+
+    </LinearLayout>
+
+</LinearLayout>
