@@ -1,13 +1,21 @@
 package com.example.proyecto_eventos;
 
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -41,6 +49,15 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         metodosSetOn();
         recibirDatosBundle();
 
+        RecyclerView recyclerViewConciertos = findViewById(R.id.rv_entradas);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewConciertos.setLayoutManager(layoutManager);
+
+        ConciertosAdapter conciertosAdapter = new ConciertosAdapter(listaConciertos);
+        recyclerViewConciertos.setAdapter(conciertosAdapter);
+
+
+
 
 
     }
@@ -49,7 +66,12 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
     private void recibirDatosBundle() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            int imagen = bundle.getInt("imagen");
+
+            int imagenId = bundle.getInt("imagen"); // Aquí recibo el id de la imagen
+            String nombreImagen = "imagen" + imagenId;
+            int resId = getResources().getIdentifier(nombreImagen, "drawable", getPackageName());
+            iv_imagen_concierto.setImageResource(resId);
+
             String nombreConcierto = bundle.getString("nombreConcierto");
             String fecha = bundle.getString("fecha");
             String lugar = bundle.getString("lugar");
@@ -81,15 +103,15 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_entradas:
-                String url = comprarEntrada;
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                Animation scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale);
+                v.startAnimation(scaleAnimation);
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(comprarEntrada));
                 startActivity(i);
-
-
-
                 break;
 
         }
 
     }
+
+
 }

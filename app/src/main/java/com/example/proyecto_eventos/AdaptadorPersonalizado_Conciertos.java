@@ -1,5 +1,6 @@
 package com.example.proyecto_eventos;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +84,8 @@ public class AdaptadorPersonalizado_Conciertos extends ArrayAdapter {
         return fila;
     }
 
-    private int obtenerIdImagen(int idImagen) {
+    @SuppressLint("DiscouragedApi")
+    public int obtenerIdImagen(int idImagen) {
 
         return getContext().getResources().getIdentifier("imagen" + idImagen, "drawable", getContext().getPackageName());
     }

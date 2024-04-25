@@ -24,7 +24,8 @@
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
         android:textColor="@android:color/white"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_style"/>
     <Space
         android:layout_width="match_parent"
         android:layout_height="20dp" />
@@ -39,7 +40,8 @@
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
         android:textColor="@android:color/white"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_style"/>
 
 </LinearLayout>
 

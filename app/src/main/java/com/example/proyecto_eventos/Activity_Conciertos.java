@@ -43,6 +43,7 @@ public class Activity_Conciertos extends AppCompatActivity {
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("imagen", concierto.getImagen());
+
                 bundle.putString("nombreConcierto", concierto.getNombreConciertos());
                 bundle.putString("fecha", concierto.getFecha());
                 bundle.putString("lugar", concierto.getLugar());
