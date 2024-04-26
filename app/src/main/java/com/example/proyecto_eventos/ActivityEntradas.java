@@ -4,6 +4,7 @@ import static java.security.AccessController.getContext;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -44,6 +45,7 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_entradas);
         miClase = new ClaseParaBBDD(this, "bbdd_aplicacion.db", null, 1);
         db = miClase.getWritableDatabase();
+        listaConciertos = (ArrayList<Conciertos>) miClase.lista();
 
         metodosFind();
         metodosSetOn();
@@ -53,8 +55,11 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewConciertos.setLayoutManager(layoutManager);
 
-        ConciertosAdapter conciertosAdapter = new ConciertosAdapter(listaConciertos);
+        ConciertosAdapter conciertosAdapter = new ConciertosAdapter(this, listaConciertos);
         recyclerViewConciertos.setAdapter(conciertosAdapter);
+
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerViewConciertos);
 
 
 
