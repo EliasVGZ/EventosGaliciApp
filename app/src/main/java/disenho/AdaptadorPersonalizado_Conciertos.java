@@ -1,4 +1,4 @@
-package com.example.proyecto_eventos;
+package disenho;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.proyecto_eventos.R;
 
 import java.util.ArrayList;
 

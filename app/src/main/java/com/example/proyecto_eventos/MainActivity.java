@@ -11,7 +11,8 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Button btnConciertos, btnFestivales;
+    private Button btnConciertos, btnFestivales, btnFestPopulares;
+    private disenho.CircularImageView imgLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,26 +20,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         metodosFind();
-
-
-        Animation slideFromTop = AnimationUtils.loadAnimation(this, R.anim.slide_from_top);
-        Animation slideFromBottom = AnimationUtils.loadAnimation(this, R.anim.slide_from_bottom);
-
-
-        btnConciertos.startAnimation(slideFromTop);
-        btnFestivales.startAnimation(slideFromBottom);
-
         metodosSetOn();
+
+
+        Animation slideFromRight = AnimationUtils.loadAnimation(this, R.anim.slide_from_right);
+        Animation slideFromLeft = AnimationUtils.loadAnimation(this, R.anim.slide_from_left);
+        btnConciertos.startAnimation(slideFromRight);
+        btnFestivales.startAnimation(slideFromLeft);
+        btnFestPopulares.startAnimation(slideFromRight);
+
+        final Animation moveAndScale = AnimationUtils.loadAnimation(this, R.anim.move_and_scale);
+        final Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+
+        imgLogo.startAnimation(moveAndScale);
+
+        imgLogo.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                btnConciertos.setVisibility(View.VISIBLE);
+                btnConciertos.startAnimation(slideFromRight);
+                btnFestivales.setVisibility(View.VISIBLE);
+                btnFestivales.startAnimation(slideFromLeft);
+                btnFestPopulares.setVisibility(View.VISIBLE);
+                btnFestPopulares.startAnimation(slideFromRight);
+            }
+        }, 2000);
+
+
     }
 
     private void metodosSetOn() {
         btnConciertos.setOnClickListener(this);
         btnFestivales.setOnClickListener(this);
+        btnFestPopulares.setOnClickListener(this);
+
     }
 
     private void metodosFind() {
         btnConciertos = findViewById(R.id.btnConciertos);
         btnFestivales = findViewById(R.id.btnFestivales);
+        btnFestPopulares = findViewById(R.id.btnFestPopulares);
+        imgLogo = findViewById(R.id.imgLogo);
     }
 
     @Override
@@ -51,7 +73,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             break;
             case R.id.btnFestivales:
+                //llamar a la actividad de festivales
             break;
+            case R.id.btnFestPopulares:
+                //llamar a la actividad de festivales populares
+                break;
         }
 
     }

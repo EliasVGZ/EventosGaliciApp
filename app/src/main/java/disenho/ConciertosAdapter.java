@@ -1,4 +1,4 @@
-package com.example.proyecto_eventos;
+package disenho;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.proyecto_eventos.R;
 
 import java.util.ArrayList;
 
@@ -44,9 +46,9 @@ public class ConciertosAdapter extends RecyclerView.Adapter<ConciertosAdapter.Co
         holder.iv_concierto.setImageResource(obtenerIdImagen(concierto.getImagen()));
     }
 
-    @Override
-    public int getItemCount() {//Devuelve el número de elementos que tiene la lista
-        return listaConciertos != null ? listaConciertos.size() : 0;
+    @Override//metodo que devuelve el numero de elementos que tiene la lista
+    public int getItemCount() {
+        return listaConciertos.size();
     }
 
     public class ConciertosViewHolder extends RecyclerView.ViewHolder {
@@ -63,12 +65,12 @@ public class ConciertosAdapter extends RecyclerView.Adapter<ConciertosAdapter.Co
             tv_precioConcierto = itemView.findViewById(R.id.tv_precioConcierto);
             iv_concierto = itemView.findViewById(R.id.iv_concierto);
 
-            // Obtén el ancho de la pantalla
+            // ancho de la pantalla para que cada item se meta en una sola fila
             DisplayMetrics displayMetrics = new DisplayMetrics();
             ((Activity) itemView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int screenWidth = displayMetrics.widthPixels;
 
-            // Establece el ancho de itemView (que es tu CardView) al ancho de la pantalla
+            // Establece el ancho de itemView (que es la CardView) al ancho de la pantalla
             ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
             layoutParams.width = screenWidth;
             itemView.setLayoutParams(layoutParams);

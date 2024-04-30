@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">Proyecto_Eventos</string>
-    <string name="mas_conciertos">Más Conciertos</string>
+    <string name="app_name">Proxecto_Eventos</string>
+    <string name="mas_conciertos">Máis Concertos</string>
+    <string name="concertos">CONCERTOS</string>
+    <string name="festivais">FESTIVAIS</string>
+    <string name="festPopulares">FESTAS POPULARES</string>
 </resources>

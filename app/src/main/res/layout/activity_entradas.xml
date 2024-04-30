@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradiente_background">
+    android:background="@drawable/gradiente_main">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
             android:id="@+id/btn_entradas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="COMPRAR ENTRADAS"
+            android:text="Mercar Entradas"
             android:textStyle="bold|normal"
             android:background="@drawable/button_style"/>
 

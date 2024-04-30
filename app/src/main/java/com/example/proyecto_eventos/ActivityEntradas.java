@@ -1,7 +1,5 @@
 package com.example.proyecto_eventos;
 
-import static java.security.AccessController.getContext;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -10,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -19,12 +15,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import controladores.ClaseParaBBDD;
+import disenho.ConciertosAdapter;
 import modelos.Conciertos;
 
 public class ActivityEntradas extends AppCompatActivity implements View.OnClickListener{
@@ -51,6 +47,7 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         metodosSetOn();
         recibirDatosBundle();
 
+
         RecyclerView recyclerViewConciertos = findViewById(R.id.rv_entradas);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewConciertos.setLayoutManager(layoutManager);
@@ -60,10 +57,6 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
 
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerViewConciertos);
-
-
-
-
 
     }
 
