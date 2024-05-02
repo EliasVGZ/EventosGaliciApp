@@ -20,7 +20,7 @@
             android:id="@+id/tv_artista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textColor="#151414"
             android:layout_marginBottom="8dp"
             android:textStyle="bold"/>
@@ -64,7 +64,8 @@
             android:textSize="20sp"
             android:textColor="#151414"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="16dp"
+            android:textStyle="bold"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_entradas"
             android:layout_width="match_parent"

@@ -1,16 +1,14 @@
 package disenho;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_eventos.R;
 
@@ -18,78 +16,85 @@ import java.util.ArrayList;
 
 import modelos.Conciertos;
 
-public class AdaptadorPersonalizado_Conciertos extends ArrayAdapter {
+public class AdaptadorPersonalizado_Conciertos extends RecyclerView.Adapter<AdaptadorPersonalizado_Conciertos.ViewHolder> {
 
-    private Activity context;
+    private Context context;
     private ArrayList<Conciertos> listaConciertos;
-    private int layoutPersonalizado;
 
-    public AdaptadorPersonalizado_Conciertos(@NonNull Activity context,
-                                             int layoutPersonalizado,
-                                             ArrayList<Conciertos> listaConciertos) {
-        super(context, layoutPersonalizado, listaConciertos);
+    private OnItemClickListener listener;
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.listener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Conciertos concierto);
+    }
+
+
+    public AdaptadorPersonalizado_Conciertos(Context context, ArrayList<Conciertos> listaConciertos) {
         this.context = context;
-        this.layoutPersonalizado = layoutPersonalizado;
         this.listaConciertos = listaConciertos;
     }
 
-    private static class ViewHolder {
-
-        TextView tv_nombreConcierto;
-        TextView tv_lugarConcierto;
-        TextView tv_fechaConcierto;
-        TextView tv_generoConcierto;
-        TextView tv_precioConcierto;
-        TextView tv_ciudad;
-        ImageView iv_concierto;
-
-
-    }
+    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Conciertos concierto = (Conciertos) getItem(position);
-        View fila = convertView;
-        ViewHolder holder;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_personalizado_conciertos, parent, false);
+        return new ViewHolder(view);
+    }
 
-        // Optimizamos el inflado
-        if (fila == null) {
-            // Inflamos el layout personalizado
-            LayoutInflater layoutInflater = context.getLayoutInflater();
-            fila = layoutInflater.inflate(layoutPersonalizado, null);
-
-            holder = new ViewHolder();
-            holder.iv_concierto = fila.findViewById(R.id.iv_concierto);
-            holder.tv_nombreConcierto = fila.findViewById(R.id.tv_nombreConcierto);
-            holder.tv_lugarConcierto = fila.findViewById(R.id.tv_lugarConcierto);
-            //holder.tv_ciudad = fila.findViewById(R.id.tv_ciudad);
-            holder.tv_fechaConcierto = fila.findViewById(R.id.tv_fechaConcierto);
-            holder.tv_generoConcierto = fila.findViewById(R.id.tv_generoConcierto);
-            holder.tv_precioConcierto = fila.findViewById(R.id.tv_precioConcierto);
-
-            fila.setTag(holder); // Guardamos los atributos dentro del holder
-        } else {
-            holder = (ViewHolder) fila.getTag();
-        }
-
-        // Asignamos los datos del concierto a las vistas
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Conciertos concierto = listaConciertos.get(position);
         holder.tv_nombreConcierto.setText(concierto.getNombreConciertos());
         holder.tv_lugarConcierto.setText(concierto.getLugar()+", "+concierto.getCiudad());
-        //holder.tv_ciudad.setText(concierto.getCiudad());
         holder.tv_fechaConcierto.setText(concierto.getFecha());
         holder.tv_generoConcierto.setText(concierto.getGenero());
         holder.tv_precioConcierto.setText(String.valueOf(concierto.getPrecio()));
-
-        // Cargamos la imagen correspondiente al concierto en el ImageView
         holder.iv_concierto.setImageResource(obtenerIdImagen(concierto.getImagen()));
 
-        return fila;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(concierto);
+                }
+            }
+        });
     }
 
-    @SuppressLint("DiscouragedApi")
+    @Override//retorna la cantidad de elementos que tiene la lista
+    public int getItemCount() {
+        return listaConciertos.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tv_nombreConcierto, tv_lugarConcierto, tv_fechaConcierto, tv_generoConcierto, tv_precioConcierto;
+        ImageView iv_concierto;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv_nombreConcierto = itemView.findViewById(R.id.tv_nombreConcierto);
+            tv_lugarConcierto = itemView.findViewById(R.id.tv_lugarConcierto);
+            tv_fechaConcierto = itemView.findViewById(R.id.tv_fechaConcierto);
+            tv_generoConcierto = itemView.findViewById(R.id.tv_generoConcierto);
+            tv_precioConcierto = itemView.findViewById(R.id.tv_precioConcierto);
+            iv_concierto = itemView.findViewById(R.id.iv_concierto);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(listaConciertos.get(position));
+                    }
+                }
+            });
+        }
+    }
+
     public int obtenerIdImagen(int idImagen) {
-
-        return getContext().getResources().getIdentifier("imagen" + idImagen, "drawable", getContext().getPackageName());
+        return context.getResources().getIdentifier("concierto_" + idImagen, "drawable", context.getPackageName());
     }
-
 }

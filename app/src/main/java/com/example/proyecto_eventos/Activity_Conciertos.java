@@ -1,16 +1,17 @@
 package com.example.proyecto_eventos;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ import modelos.Conciertos;
 
 public class Activity_Conciertos extends Auxiliar_Activity {
 
-    private ListView lv_conciertos;
+    private RecyclerView rv_conciertos;
     private EditText et_buscador;
     private ClaseParaBBDD miClase;
     private static SQLiteDatabase db;
@@ -33,41 +34,15 @@ public class Activity_Conciertos extends Auxiliar_Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conciertos);
-
         et_buscador = findViewById(R.id.et_buscador);
+        rv_conciertos = findViewById(R.id.rv_conciertos);
+        //se muestren los conciertos en dos columnas
+        rv_conciertos.setLayoutManager(new GridLayoutManager(this, 2));
 
-        lv_conciertos = findViewById(R.id.lv_conciertos);
         miClase = new ClaseParaBBDD(this, "bbdd_aplicacion.db", null, 1);
         db = miClase.getWritableDatabase();
-
         listaConciertos = (ArrayList<Conciertos>) miClase.lista();
-
-        setupListView(lv_conciertos, listaConciertos);
-
-        lv_conciertos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Conciertos concierto = listaConciertos.get(position);
-
-                Bundle bundle = new Bundle();
-                bundle.putInt("imagen", concierto.getImagen());
-
-                bundle.putString("nombreConcierto", concierto.getNombreConciertos());
-                bundle.putString("fecha", concierto.getFecha());
-                bundle.putString("lugar", concierto.getLugar());
-                bundle.putString("ciudad", concierto.getCiudad());
-                bundle.putString("comprarEntrada", concierto.getCompraEntrada());
-
-
-                Intent intent = new Intent(Activity_Conciertos.this, ActivityEntradas.class);
-                intent.putExtras(bundle);
-
-
-                startActivity(intent);
-            }
-        });
-
-
+        setupRecyclerView(rv_conciertos, listaConciertos);
         et_buscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -82,22 +57,34 @@ public class Activity_Conciertos extends Auxiliar_Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                // No necesitamos hacer nada aquí
+                // No  hacer nada aquí
             }
         });
 
-    }
-
-
-    public void setupListView(ListView listView, ArrayList<Conciertos> dataList) {
-        adaptador = new AdaptadorPersonalizado_Conciertos(
-                this, R.layout.layout_personalizado_conciertos, dataList
-        );
-        listView.setAdapter(adaptador);
 
 
     }
 
+
+    public void setupRecyclerView(RecyclerView recyclerView, ArrayList<Conciertos> listaConciertos) {
+        adaptador = new AdaptadorPersonalizado_Conciertos(this, listaConciertos);
+        recyclerView.setAdapter(adaptador);
+        //lambda, se le pasa un concierto y se ejecuta el metodo onItemClick
+        adaptador.setOnItemClickListener(concierto -> {
+
+            Intent intent = new Intent(Activity_Conciertos.this, ActivityEntradas.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("nombreConcierto", concierto.getNombreConciertos());
+            bundle.putString("fecha", concierto.getFecha());
+            bundle.putString("lugar", concierto.getLugar());
+            bundle.putString("ciudad", concierto.getCiudad());
+            bundle.putString("comprarEntrada", concierto.getCompraEntrada());
+            bundle.putInt("imagen", concierto.getImagen());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
+    }
+    //boton buscar
     private void filtrarConciertos(String texto) {
         ArrayList<Conciertos> listaFiltrada = new ArrayList<>();
 
@@ -109,9 +96,9 @@ public class Activity_Conciertos extends Auxiliar_Activity {
 
         //se actualiza la lista con lo buscado
         adaptador = new AdaptadorPersonalizado_Conciertos(
-                this, R.layout.layout_personalizado_conciertos, listaFiltrada
+                this, listaFiltrada
         );
-        lv_conciertos.setAdapter(adaptador);
+        rv_conciertos.setAdapter(adaptador);
     }
 
     public EditText getBuscadorEditText() {

@@ -55,6 +55,7 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         ConciertosAdapter conciertosAdapter = new ConciertosAdapter(this, listaConciertos);
         recyclerViewConciertos.setAdapter(conciertosAdapter);
 
+        //para que se vea un concierto a la vez
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerViewConciertos);
 
@@ -66,7 +67,7 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         if (bundle != null) {
 
             int imagenId = bundle.getInt("imagen"); // Aquí recibo el id de la imagen
-            String nombreImagen = "imagen" + imagenId;
+            String nombreImagen = "concierto_" + imagenId;
             int resId = getResources().getIdentifier(nombreImagen, "drawable", getPackageName());
             iv_imagen_concierto.setImageResource(resId);
 
@@ -101,6 +102,7 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_entradas:
+                //esto es para que haga una animacion al pulsar el boton
                 Animation scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale);
                 v.startAnimation(scaleAnimation);
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(comprarEntrada));

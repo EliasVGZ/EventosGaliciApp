@@ -30,27 +30,35 @@ public class ConciertosAdapter extends RecyclerView.Adapter<ConciertosAdapter.Co
     @NonNull
     @Override
     public ConciertosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_personalizado_conciertos, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_personalizado_foot, parent, false);
         return new ConciertosViewHolder(view);
     }
 
+    //para cada item de la lista se le asigna un concierto
     @Override
     public void onBindViewHolder(@NonNull ConciertosViewHolder holder, int position) {
         Conciertos concierto = listaConciertos.get(position);
+
+        // Configura la imagen del concierto
+        int imagenId = obtenerIdImagen(concierto.getImagen());
+        holder.iv_concierto.setImageResource(imagenId);
+
+        // Configura la información del concierto
         holder.tv_nombreConcierto.setText(concierto.getNombreConciertos());
-        //holder.tv_ciudad.setText(concierto.getCiudad());
         holder.tv_lugarConcierto.setText(concierto.getLugar());
         holder.tv_fechaConcierto.setText(concierto.getFecha());
         holder.tv_generoConcierto.setText(concierto.getGenero());
-        holder.tv_precioConcierto.setText(String.valueOf(concierto.getPrecio()));
-        holder.iv_concierto.setImageResource(obtenerIdImagen(concierto.getImagen()));
+        holder.tv_precioConcierto.setText(concierto.getPrecio());
     }
+
+
 
     @Override//metodo que devuelve el numero de elementos que tiene la lista
     public int getItemCount() {
         return listaConciertos.size();
     }
 
+    // Clase interna, que extiende de RecyclerView.ViewHolder para poder acceder a los elementos de la vista
     public class ConciertosViewHolder extends RecyclerView.ViewHolder {
         TextView tv_nombreConcierto, tv_ciudad, tv_lugarConcierto, tv_fechaConcierto, tv_generoConcierto, tv_precioConcierto;
         ImageView iv_concierto;
@@ -78,6 +86,6 @@ public class ConciertosAdapter extends RecyclerView.Adapter<ConciertosAdapter.Co
     }
 
     public int obtenerIdImagen(int idImagen) {
-        return context.getResources().getIdentifier("imagen" + idImagen, "drawable", context.getPackageName());
+        return context.getResources().getIdentifier("concierto_" + idImagen, "drawable", context.getPackageName());
     }
 }

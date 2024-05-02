@@ -2,22 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/gradiente_main">
+    <include
+        layout="@layout/toolbar"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
     <EditText
         android:id="@+id/et_buscador"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Atopa o teu concerto favorito"
+        android:hint="@string/atopa_o_teu_concerto_favorito"
         android:visibility="gone"
         android:gravity="center"/>
 
-    <ListView
-        android:id="@+id/lv_conciertos"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_conciertos"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
