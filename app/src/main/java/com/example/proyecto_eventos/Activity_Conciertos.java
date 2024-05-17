@@ -6,12 +6,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,7 @@ public class Activity_Conciertos extends Auxiliar_Activity {
 
     private RecyclerView rv_conciertos;
     private EditText et_buscador;
+    private ImageView opc_buscador;
     private ClaseParaBBDD miClase;
     private static SQLiteDatabase db;
     ArrayList<Conciertos> listaConciertos;
@@ -36,6 +40,7 @@ public class Activity_Conciertos extends Auxiliar_Activity {
         setContentView(R.layout.activity_conciertos);
         et_buscador = findViewById(R.id.et_buscador);
         rv_conciertos = findViewById(R.id.rv_conciertos);
+        opc_buscador = findViewById(R.id.opc_buscador);
         //se muestren los conciertos en dos columnas
         rv_conciertos.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -58,6 +63,14 @@ public class Activity_Conciertos extends Auxiliar_Activity {
             @Override
             public void afterTextChanged(Editable s) {
                 // No  hacer nada aquí
+            }
+        });
+
+        //todo buscadro de conciertos
+        opc_buscador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_buscador.setVisibility(View.VISIBLE);
             }
         });
 
@@ -103,5 +116,21 @@ public class Activity_Conciertos extends Auxiliar_Activity {
 
     public EditText getBuscadorEditText() {
         return et_buscador;
+    }
+
+    //ocultar el editext cuando se hace click en cualquier parte de la pantalla
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (et_buscador.isShown()) {
+                Rect outRect = new Rect();//se crea un rectangulo
+                et_buscador.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    et_buscador.setVisibility(View.GONE);
+                    return true;
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 }
