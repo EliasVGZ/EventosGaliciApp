@@ -2,7 +2,7 @@ package modelos;
 
 public class Conciertos {
 
-    private int id_concierto;
+    private int id;
     private String nombreConciertos;
     private String fecha;
     private String lugar;
@@ -11,9 +11,10 @@ public class Conciertos {
     private String precio;
     private int imagen;
     private String compraEntrada;
+    private String imagenUrl;
 
-    public Conciertos(int id_concierto, String nombreConciertos, String fecha, String lugar, String ciudad, String genero, String precio, int imagen) {
-        this.id_concierto = id_concierto;
+    public Conciertos(int id, String nombreConciertos, String fecha, String lugar, String ciudad, String genero, String precio, int imagen) {
+        this.id = id;
         this.nombreConciertos = nombreConciertos;
         this.fecha = fecha;
         this.lugar = lugar;
@@ -23,8 +24,8 @@ public class Conciertos {
         this.imagen = imagen;
     }
 
-    public Conciertos(int id_concierto, String nombreConciertos, String fecha, String lugar, String ciudad, String genero, String precio, int imagen, String compraEntrada) {
-        this.id_concierto = id_concierto;
+    public Conciertos(int id, String nombreConciertos, String fecha, String lugar, String ciudad, String genero, String precio, int imagen, String compraEntrada) {
+        this.id = id;
         this.nombreConciertos = nombreConciertos;
         this.fecha = fecha;
         this.lugar = lugar;
@@ -38,6 +39,14 @@ public class Conciertos {
     public Conciertos() {
     }
 
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
+    }
+
     public String getCompraEntrada() {
         return compraEntrada;
     }
@@ -46,12 +55,12 @@ public class Conciertos {
         this.compraEntrada = compraEntrada;
     }
 
-    public int getId_concierto() {
-        return id_concierto;
+    public int getid() {
+        return id;
     }
 
-    public void setId_concierto(int id_concierto) {
-        this.id_concierto = id_concierto;
+    public void setid(int id) {
+        this.id = id;
     }
 
     public String getNombreConciertos() {

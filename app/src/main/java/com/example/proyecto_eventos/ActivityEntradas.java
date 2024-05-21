@@ -1,5 +1,6 @@
 package com.example.proyecto_eventos;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -16,6 +17,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -66,10 +73,27 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
 
-            int imagenId = bundle.getInt("imagen"); // Aquí recibo el id de la imagen
+            /*String imagenId = bundle.getString("imagen"); // Aquí recibo el id de la imagen
             String nombreImagen = "concierto_" + imagenId;
             int resId = getResources().getIdentifier(nombreImagen, "drawable", getPackageName());
-            iv_imagen_concierto.setImageResource(resId);
+            iv_imagen_concierto.setImageResource(resId);*/
+            String imagenUrl = bundle.getString("imagen"); // Aquí recibo la URL de la imagen
+
+            StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imagenUrl);
+
+            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(ActivityEntradas.this).load(uri.toString()).into(iv_imagen_concierto);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+
+
 
             String nombreConcierto = bundle.getString("nombreConcierto");
             String fecha = bundle.getString("fecha");

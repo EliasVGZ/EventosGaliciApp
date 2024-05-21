@@ -18,7 +18,6 @@
     android:hint="@string/atopa_o_teu_concerto_favorito"
     android:visibility="gone"
     android:gravity="center"
-    android:background="@drawable/edittext_background"
     android:textColor="@color/black"
     android:padding="10dp"
     android:drawablePadding="10dp"

@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnFestPopulares.startAnimation(slideFromRight);
 
         final Animation moveAndScale = AnimationUtils.loadAnimation(this, R.anim.move_and_scale);
-        final Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
 
         imgLogo.startAnimation(moveAndScale);
 

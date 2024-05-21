@@ -1,6 +1,8 @@
 package disenho;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.proyecto_eventos.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -25,6 +31,12 @@ public class AdaptadorPersonalizado_Conciertos extends RecyclerView.Adapter<Adap
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.listener = onItemClickListener;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void actualizarDatos(ArrayList<Conciertos> nuevaLista) {
+        this.listaConciertos = nuevaLista;
+        notifyDataSetChanged();
     }
 
     public interface OnItemClickListener {
@@ -52,7 +64,18 @@ public class AdaptadorPersonalizado_Conciertos extends RecyclerView.Adapter<Adap
         holder.tv_fechaConcierto.setText(concierto.getFecha());
         holder.tv_generoConcierto.setText(concierto.getGenero());
         holder.tv_precioConcierto.setText(String.valueOf(concierto.getPrecio()));
-        holder.iv_concierto.setImageResource(obtenerIdImagen(concierto.getImagen()));
+        //holder.iv_concierto.setImageResource(obtenerIdImagen(concierto.getImagen()));
+
+        // Obtén la URL de descarga de Firebase Storage y carga la imagen con Glide
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(concierto.getImagenUrl());
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context)
+                        .load(uri.toString())
+                        .into(holder.iv_concierto);
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
