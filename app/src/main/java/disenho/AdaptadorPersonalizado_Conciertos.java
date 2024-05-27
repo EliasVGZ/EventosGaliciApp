@@ -73,6 +73,7 @@ public class AdaptadorPersonalizado_Conciertos extends RecyclerView.Adapter<Adap
             public void onSuccess(Uri uri) {
                 Glide.with(context)
                         .load(uri.toString())
+                        .fitCenter()
                         .into(holder.iv_concierto);
             }
         });

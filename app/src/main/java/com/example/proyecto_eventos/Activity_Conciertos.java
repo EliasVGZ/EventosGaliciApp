@@ -2,7 +2,6 @@ package com.example.proyecto_eventos;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,31 +16,29 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
-import auxiliares.Auxiliar_Activity;
 import controladores.ClaseParaBBDD;
 import disenho.AdaptadorPersonalizado_Conciertos;
 import modelos.Conciertos;
 import utils.RealTimeManager;
 
-public class Activity_Conciertos extends Auxiliar_Activity {
+public class Activity_Conciertos extends AppCompatActivity  {
 
     private RecyclerView rv_conciertos;
-    private EditText et_buscador;
-    private ImageView opc_buscador;
+    private EditText et_buscador, et_filtro_ciudad;
+    private ImageView opc_buscador, opc_filtro, opc_login, opc_preguntas;
+    private LinearLayout ll_filtro_ciudad;
     private ClaseParaBBDD miClase;
     private static SQLiteDatabase db;
     ArrayList<Conciertos> listaConciertos;
@@ -60,10 +57,8 @@ public class Activity_Conciertos extends Auxiliar_Activity {
         rv_conciertos.setLayoutManager(new GridLayoutManager(this, 2));
         listaConciertos = new ArrayList<>();
 
-        FirebaseApp.initializeApp(this);
-        mfirestore = FirebaseFirestore.getInstance();
-
-
+        FirebaseApp.initializeApp(this);// se inicializa Firebase
+        mfirestore = FirebaseFirestore.getInstance();//se obtiene la instancia de Firestore
 
 
         //todo miClase = new ClaseParaBBDD(this, "bbdd_aplicacion.db", null, 1);
@@ -73,15 +68,12 @@ public class Activity_Conciertos extends Auxiliar_Activity {
 
         setupRecyclerView(rv_conciertos, new ArrayList<>(listaConciertos));
 
-        /*realTimeManager = new RealTimeManager();
-        realTimeManager.getConciertos().observe(this, new Observer<List<Conciertos>>() {
-            @Override
-            public void onChanged(List<Conciertos> conciertos) {
-                // Solo actualizar si los datos iniciales ya se han cargado
-                    setupRecyclerView(rv_conciertos, new ArrayList<>(conciertos));
 
-            }
-        });*/
+
+
+
+
+        //Buscar por concierto
         et_buscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -100,15 +92,43 @@ public class Activity_Conciertos extends Auxiliar_Activity {
             }
         });
 
-        //todo buscadro de conciertos
+        //Filtrar por ciudad
+        et_filtro_ciudad.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // puede estar vacio
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // se filtra  la lista de conciertos
+                filtrarCiudad(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // No  hacer nada aquí
+            }
+        });
+
+
         opc_buscador.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ll_filtro_ciudad.setVisibility(View.GONE);
                 et_buscador.setVisibility(View.VISIBLE);
             }
         });
 
-        //cargarDatos();
+        opc_filtro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_buscador.setVisibility(View.GONE);
+                ll_filtro_ciudad.setVisibility(View.VISIBLE);
+            }
+        });
+
+
 
 
 
@@ -189,29 +209,53 @@ public class Activity_Conciertos extends Auxiliar_Activity {
         rv_conciertos.setAdapter(adaptador);
     }
 
+    private void filtrarCiudad(String texto){
+        ArrayList<Conciertos> listaFiltrada = new ArrayList<>();
+
+        for (Conciertos concierto : listaConciertos) {
+            if (concierto.getCiudad().toLowerCase().contains(texto.toLowerCase())) {
+                listaFiltrada.add(concierto);
+            }
+        }
+
+        //se actualiza la lista con lo buscado
+        adaptador = new AdaptadorPersonalizado_Conciertos(
+                this, listaFiltrada
+        );
+        rv_conciertos.setAdapter(adaptador);
+    }
+/*
     public EditText getBuscadorEditText() {
         return et_buscador;
-    }
+    }*/
 
     private void metodosFind() {
         et_buscador = findViewById(R.id.et_buscador);
         rv_conciertos = findViewById(R.id.rv_conciertos);
         opc_buscador = findViewById(R.id.opc_buscador);
+        opc_filtro = findViewById(R.id.opc_filtro);
+        et_filtro_ciudad = findViewById(R.id.et_filtro_ciudad);
+        ll_filtro_ciudad = findViewById(R.id.ll_filtro_ciudad);
+        opc_login = findViewById(R.id.opc_login);
     }
 
     //ocultar el editext cuando se hace click en cualquier parte de la pantalla
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (et_buscador.isShown()) {
+            if (et_buscador.isShown() || ll_filtro_ciudad.isShown()) {
                 Rect outRect = new Rect();//se crea un rectangulo
                 et_buscador.getGlobalVisibleRect(outRect);
+                ll_filtro_ciudad.getGlobalVisibleRect(outRect);
                 if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
                     et_buscador.setVisibility(View.GONE);
+                    ll_filtro_ciudad.setVisibility(View.GONE);
                     return true;
                 }
             }
         }
         return super.dispatchTouchEvent(event);
     }
+
+
 }

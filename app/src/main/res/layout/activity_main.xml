@@ -3,67 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradiente_main">
+    android:gravity="center">
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/logo">
 
-    <disenho.CircularImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center"
-        android:src="@drawable/definitiva"
-        android:layout_marginTop="20dp"/>
+    </ImageView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_marginBottom="20dp">
-
-        <Button
-            android:id="@+id/btnConciertos"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_style"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:text="@string/concertos"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:visibility="gone" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <Button
-            android:id="@+id/btnFestivales"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_style"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:text="@string/festivais"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:visibility="gone" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <Button
-            android:id="@+id/btnFestPopulares"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_style"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:text="@string/festPopulares"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:visibility="gone" />
-    </LinearLayout>
 </LinearLayout>

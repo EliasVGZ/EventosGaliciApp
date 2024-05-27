@@ -24,7 +24,7 @@ public class Auxiliar_Activity extends AppCompatActivity {
     }
 
 
-
+/*
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -32,8 +32,9 @@ public class Auxiliar_Activity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.opc_buscador:
                 getBuscadorEditText().setVisibility(View.VISIBLE);
-
                 return true;
+            case R.id.opc_filtro:
+                getFiltroEditText().setVisibility(View.VISIBLE);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -42,5 +43,8 @@ public class Auxiliar_Activity extends AppCompatActivity {
     public EditText getBuscadorEditText() {
         return findViewById(R.id.et_buscador);
     }
+    public EditText getFiltroEditText() {
+        return findViewById(R.id.et_filtro_ciudad);
+    }*/
 
 }

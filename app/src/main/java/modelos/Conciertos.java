@@ -12,6 +12,7 @@ public class Conciertos {
     private int imagen;
     private String compraEntrada;
     private String imagenUrl;
+    private String nombreId;
 
     public Conciertos(int id, String nombreConciertos, String fecha, String lugar, String ciudad, String genero, String precio, int imagen) {
         this.id = id;
@@ -39,6 +40,22 @@ public class Conciertos {
     public Conciertos() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombreId() {
+        return nombreId;
+    }
+
+    public void setNombreId(String nombreId) {
+        this.nombreId = nombreId;
+    }
+
     public String getImagenUrl() {
         return imagenUrl;
     }
@@ -55,13 +72,6 @@ public class Conciertos {
         this.compraEntrada = compraEntrada;
     }
 
-    public int getid() {
-        return id;
-    }
-
-    public void setid(int id) {
-        this.id = id;
-    }
 
     public String getNombreConciertos() {
         return nombreConciertos;

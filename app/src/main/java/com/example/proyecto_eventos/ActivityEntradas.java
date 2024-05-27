@@ -39,7 +39,6 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
     private static SQLiteDatabase db;
     ArrayList<Conciertos> listaConciertos;
 
-    private Conciertos conciertos;
     private String comprarEntrada;
 
     @Override

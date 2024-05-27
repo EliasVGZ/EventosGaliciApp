@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="boton_entrada">#009688</color>
     <color name="boton_clickear">#033A35</color>
+    <color name="color_tool">#8A939E9B</color>
+
 </resources>

@@ -14,11 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Proyecto_Eventos"
         tools:targetApi="31">
+
         <activity
-            android:name=".ActivityEntradas"
-            android:exported="false" />
-        <activity
-            android:name=".Activity_Conciertos"
+            android:name=".Activity_Menu"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -29,6 +27,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="controladores.ActivityAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityEntradas"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_Conciertos"
+            android:exported="false" />
+        <activity
+            android:name="controladores.AdminLoginActivity"
+            android:exported="false"></activity>
+
     </application>
 
 </manifest>

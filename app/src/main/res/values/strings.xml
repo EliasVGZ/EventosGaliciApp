@@ -5,4 +5,10 @@
     <string name="festivais">FESTIVAIS</string>
     <string name="festPopulares">FESTAS POPULARES</string>
     <string name="atopa_o_teu_concerto_favorito">Atopa o teu concerto favorito</string>
+    <string name="cidade">Cidade :</string>
+    <string name="filtra_nas_cidades">Filtra nas cidades</string>
+    <string name="ya_tengo_una_cuenta"><u>Xa tenho unha conta</u></string>
+    <string name="iniciar_sesion">Iniciar Sesion</string>
+    <string name="restablecer_contrasinal">Restablecer contrasinal</string>
+    <string name="correo_electr_nico">Correo electrónico</string>
 </resources>

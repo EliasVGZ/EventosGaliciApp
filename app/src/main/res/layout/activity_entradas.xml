@@ -6,18 +6,18 @@
     android:background="@drawable/gradiente_main">
 
     <include
-    layout="@layout/toolbar_grupo"/>
+    layout="@layout/toolbar_menu"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="450dp"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
         <ImageView
             android:id="@+id/iv_imagen_concierto"
             android:layout_width="match_parent"
-            android:layout_height="350dp"/>
+            android:layout_height="300dp"/>
 
         <TextView
             android:id="@+id/tv_artista"
@@ -32,7 +32,7 @@
             android:id="@+id/tv_fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="10sp"
             android:textColor="#151414"
             android:layout_marginBottom="8dp"
             android:textStyle="bold"/>
@@ -41,24 +41,22 @@
             android:id="@+id/tv_lugar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="10sp"
             android:textColor="#151414"
             android:layout_marginBottom="16dp"
             android:textStyle="bold"/>
 
         <Button
             android:id="@+id/btn_entradas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200sp"
+            android:layout_height="50dp"
             android:text="Mercar Entradas"
             android:textStyle="bold|normal"
             android:background="@drawable/button_style"/>
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+
+
         <TextView
             android:id="@+id/tv_conciertos"
             android:layout_width="wrap_content"
@@ -72,9 +70,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_entradas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
         </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
+
+    <include
+        layout="@layout/toolbar_grupo"/>
 
 </LinearLayout>
 

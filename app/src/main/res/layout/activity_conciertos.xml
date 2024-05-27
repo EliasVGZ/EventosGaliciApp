@@ -5,25 +5,69 @@
     android:orientation="vertical"
     android:background="@drawable/gradiente_main">
     <include
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar_menu"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="10dp"/>
 
-    <EditText
-    android:id="@+id/et_buscador"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="@string/atopa_o_teu_concerto_favorito"
-    android:visibility="gone"
-    android:gravity="center"
-    android:textColor="@color/black"
-    android:padding="10dp"
-    android:drawablePadding="10dp"
-    android:textSize="16sp"
-    android:fontFamily="sans-serif-light"
-    android:textStyle="bold"/>
+
+
+
+        <EditText
+            android:id="@+id/et_buscador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/atopa_o_teu_concerto_favorito"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textColor="#8BC34A"
+            android:padding="10dp"
+            android:drawablePadding="10dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
+            android:background="@drawable/edittext_background"
+            android:layout_gravity="center" />
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_filtro_ciudad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:background="@drawable/edittext_background">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cidade"
+                android:textColor="#8BC34A"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="bold"
+                android:paddingLeft="16dp"/>
+
+            <EditText
+                android:id="@+id/et_filtro_ciudad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/filtra_nas_cidades"
+                android:gravity="center"
+                android:textColor="#8BC34A"
+                android:padding="10dp"
+                android:drawablePadding="10dp"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="bold"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_conciertos"
@@ -32,5 +76,8 @@
         android:layout_weight="1">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <include
+        layout="@layout/toolbar_foot"/>
 
 </LinearLayout>

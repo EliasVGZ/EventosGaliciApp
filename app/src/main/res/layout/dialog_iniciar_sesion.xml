@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/usuario_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/con_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contrasinal"
+        android:inputType="textPassword"
+        android:layout_marginBottom="10dp"/>
+    <TextView
+        android:id="@+id/tv_cuenta_olvidada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Olvidaches o contrasinal?"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/iniciar_sesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/iniciar_sesion"
+        android:layout_marginBottom="10dp"/>
+
+
+</LinearLayout>
