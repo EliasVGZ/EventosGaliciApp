@@ -43,7 +43,7 @@ public class RecuperarContrasinalDialog extends DialogFragment {
                 String email = emailInput.getText().toString();
 
                 if (!email.contains("@")) {
-                    Toast.makeText(getActivity(), "O correo eletrónico non esta ben formado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -52,10 +52,10 @@ public class RecuperarContrasinalDialog extends DialogFragment {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "Correo para restablecer contrasinal enviado", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.envio_email), Toast.LENGTH_SHORT).show();
                                     dismiss();
                                 } else {
-                                    Toast.makeText(getActivity(), "Error ao enviar correo para restablecer contrasinal", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.error_envio_email), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

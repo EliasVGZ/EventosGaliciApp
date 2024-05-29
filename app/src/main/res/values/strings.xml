@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Proxecto_Eventos</string>
-    <string name="mas_conciertos">Máis Concertos</string>
+    <string name="mas_conciertos">Artistas relacionados</string>
     <string name="concertos">CONCERTOS</string>
     <string name="festivais">FESTIVAIS</string>
     <string name="festPopulares">FESTAS POPULARES</string>
@@ -11,4 +11,19 @@
     <string name="iniciar_sesion">Iniciar Sesion</string>
     <string name="restablecer_contrasinal">Restablecer contrasinal</string>
     <string name="correo_electr_nico">Correo electrónico</string>
+
+    <!--Texto Toast-!-->
+
+    <string name="empty_fields">Hai campos vacios.</string>
+    <string name="invalid_email">O correo eletrónico non esta ben formado</string>
+    <string name="short_password">O contrasinal debe ter minimo 6 caracteres</string>
+    <string name="inicio_sesion">Iniciou sesión</string>
+    <string name="error_sesion">Erro no inicio de sesión</string>
+    <string name="usuario_creado">Usuario creado correctamente.</string>
+    <string name="usuario_existe">O usuario xa existe.</string>
+    <string name="error_usuario">Erro no rexistro do usuario.</string>
+    <string name="envio_email">Correo para restablecer contrasinal enviado.</string>
+    <string name="error_envio_email">Erro ao enviar correo para restablecer contrasinal.</string>
+    <string name="mercar_entradas">Mercar Entradas</string>
+
 </resources>

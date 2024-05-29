@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="502dp"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
@@ -24,6 +24,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:textColor="#151414"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_precioConcierto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
             android:textColor="#151414"
             android:layout_marginBottom="8dp"
             android:textStyle="bold"/>
@@ -50,7 +58,7 @@
             android:id="@+id/btn_entradas"
             android:layout_width="200sp"
             android:layout_height="50dp"
-            android:text="Mercar Entradas"
+            android:text="@string/mercar_entradas"
             android:textStyle="bold|normal"
             android:background="@drawable/button_style"/>
 
@@ -62,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mas_conciertos"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="#151414"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"

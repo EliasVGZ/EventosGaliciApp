@@ -1,7 +1,9 @@
 package disenho;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.proyecto_eventos.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -33,15 +39,16 @@ public class ConciertosAdapter extends RecyclerView.Adapter<ConciertosAdapter.Co
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_personalizado_foot, parent, false);
         return new ConciertosViewHolder(view);
     }
+    @SuppressLint("NotifyDataSetChanged")
+    public void actualizarDatos(ArrayList<Conciertos> nuevaLista) {
+        this.listaConciertos = nuevaLista;
+        notifyDataSetChanged();
+    }
 
     //para cada item de la lista se le asigna un concierto
     @Override
     public void onBindViewHolder(@NonNull ConciertosViewHolder holder, int position) {
         Conciertos concierto = listaConciertos.get(position);
-
-        // Configura la imagen del concierto
-        int imagenId = obtenerIdImagen(concierto.getImagen());
-        holder.iv_concierto.setImageResource(imagenId);
 
         // Configura la información del concierto
         holder.tv_nombreConcierto.setText(concierto.getNombreConciertos());
@@ -49,6 +56,18 @@ public class ConciertosAdapter extends RecyclerView.Adapter<ConciertosAdapter.Co
         holder.tv_fechaConcierto.setText(concierto.getFecha());
         holder.tv_generoConcierto.setText(concierto.getGenero());
         holder.tv_precioConcierto.setText(concierto.getPrecio());
+
+        // Obtén la URL de descarga de Firebase Storage y carga la imagen con Glide
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(concierto.getImagenUrl());
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context)
+                        .load(uri.toString())
+                        .fitCenter()
+                        .into(holder.iv_concierto);
+            }
+        });
     }
 
 

@@ -51,17 +51,17 @@ public class LoginDialog extends DialogFragment {
                 String email = usernameInput.getText().toString();
                 String password = passwordInput.getText().toString();
                 if(email.isEmpty() || password.isEmpty()){
-                    Toast.makeText(getActivity(), "Hai campos vacios.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.empty_fields), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (!email.contains("@")) {
-                    Toast.makeText(getActivity(), "O correo electrónico non esta ben formado.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (password.length() < 6) {
-                    Toast.makeText(getActivity(), "O contrasinal debe ter minimo 6 caracteres", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.short_password), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -70,13 +70,13 @@ public class LoginDialog extends DialogFragment {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "Usuario creado correctamente.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.usuario_creado), Toast.LENGTH_SHORT).show();
                                     dismiss();
                                 } else {
                                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                        Toast.makeText(getActivity(), "O usuario xa existe.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), getString(R.string.usuario_existe), Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(getActivity(), "Non se puido crear o usuario.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), getString(R.string.error_usuario), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }

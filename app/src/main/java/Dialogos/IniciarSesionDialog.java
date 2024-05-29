@@ -47,17 +47,17 @@ public class IniciarSesionDialog extends DialogFragment {
                 String email = usuario_input.getText().toString();
                 String password = con_input.getText().toString();
                 if(email.isEmpty() || password.isEmpty()){
-                    Toast.makeText(getActivity(), "Hai campos vacios.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.empty_fields), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (!email.contains("@")) {
-                    Toast.makeText(getActivity(), "O correo eletrónico non esta ben formado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (password.length() < 6) {
-                    Toast.makeText(getActivity(), "O contrasinal debe ter minimo 6 caracteres", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.short_password), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -66,10 +66,10 @@ public class IniciarSesionDialog extends DialogFragment {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "Iniciou sesión", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.inicio_sesion), Toast.LENGTH_SHORT).show();
                                     dismiss();
                                 } else {
-                                    Toast.makeText(getActivity(), "Error no inicio de sesión", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.error_sesion), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
