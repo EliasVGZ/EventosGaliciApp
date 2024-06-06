@@ -1,5 +1,5 @@
-# **Jastas-Pista**
-**Jastas-Pista** es una aplicación desarrollada en Java en AndroidStudio que gestiona eventos como conciertos, festivales y fiestas populares en Galicia. Utiliza Firebase para almacenar y sincronizar datos en tiempo real, ofreciendo una solución completa para la organización y gestión de eventos.
+# **EventosGaliciaApp**
+**EventosGaliciaApp** es una aplicación desarrollada en Java en AndroidStudio que gestiona eventos como conciertos, festivales y fiestas populares en Galicia. Utiliza Firebase para almacenar y sincronizar datos en tiempo real, ofreciendo una solución completa para la organización y gestión de eventos.
 
 ## **Características**
 - **Registro y autenticación de usuarios**: Permite a los usuarios registrarse e iniciar sesión de forma segura.
