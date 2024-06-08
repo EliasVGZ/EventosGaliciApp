@@ -11,11 +11,13 @@
         android:icon="@drawable/logo"
         android:label="Jastas-Pista"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Proyecto_Eventos"
-        android:screenOrientation="portrait"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ActivitySubirImagen"
+            android:exported="false" />
         <activity
             android:name=".Activity_Menu"
             android:exported="false" />
@@ -39,8 +41,7 @@
             android:exported="false" />
         <activity
             android:name="controladores.AdminLoginActivity"
-            android:exported="false"></activity>
-
+            android:exported="false" />
     </application>
 
 </manifest>

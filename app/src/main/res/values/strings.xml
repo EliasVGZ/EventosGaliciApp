@@ -25,5 +25,7 @@
     <string name="envio_email">Correo para restablecer contrasinal enviado.</string>
     <string name="error_envio_email">Erro ao enviar correo para restablecer contrasinal.</string>
     <string name="mercar_entradas">Mercar Entradas</string>
+    <string name="subir_imagen">SUBIR IMAGEN</string>
+    <string name="selecciona_imagen">SELECCIONA IMAGEN</string>
 
 </resources>
