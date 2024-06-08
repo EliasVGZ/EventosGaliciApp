@@ -127,14 +127,14 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
             genero = bundle.getString("genero");
             comprarEntrada = bundle.getString("comprarEntrada");
             tv_artista.setText("Artista: "+nombreConcierto);
-            tv_precioConcierto.setText("Precio: "+precio+"€");
+            tv_precioConcierto.setText("Precio: "+precio);
             tv_fecha.setText("Fecha: "+fecha);
             tv_lugar.setText("Lugar: "+lugar+ ", "+ciudad);
 
 
         }
     }
-    private void cargarDatos() {
+    private void cargarDatos() {//se cargan los datos en el recyclerView horizontal
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         //Muestra los conciertos que tengan el mismo genero que el concierto seleccionado
         db.collection("conciertos")
@@ -146,7 +146,8 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
                         listaConciertos.clear();
                         String nombreArtistaSuperior = tv_artista.getText().toString().replace("Artista: ", "");
                         for (Conciertos concierto : queryDocumentSnapshots.toObjects(Conciertos.class)) {
-                            if (!concierto.getNombreConciertos().equals(nombreArtistaSuperior)) {//Si no es igual se va añadiendo a la lista
+                            if (!concierto
+                                    .getNombre().equals(nombreArtistaSuperior)) {//Si no es igual se va añadiendo a la lista
                                 listaConciertos.add(concierto);
                             }
                         }

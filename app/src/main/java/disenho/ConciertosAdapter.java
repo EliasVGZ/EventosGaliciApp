@@ -51,7 +51,7 @@ public class ConciertosAdapter extends RecyclerView.Adapter<ConciertosAdapter.Co
         Conciertos concierto = listaConciertos.get(position);
 
         // Configura la información del concierto
-        holder.tv_nombreConcierto.setText(concierto.getNombreConciertos());
+        holder.tv_nombreConcierto.setText(concierto.getNombre());
         holder.tv_lugarConcierto.setText(concierto.getLugar());
         holder.tv_fechaConcierto.setText(concierto.getFecha());
         holder.tv_generoConcierto.setText(concierto.getGenero());

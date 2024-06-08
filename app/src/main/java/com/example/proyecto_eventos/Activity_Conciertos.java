@@ -61,7 +61,7 @@ public class Activity_Conciertos extends AppCompatActivity  {
         listaConciertos = new ArrayList<>();
 
         FirebaseApp.initializeApp(this);// se inicializa Firebase
-        mfirestore = FirebaseFirestore.getInstance();//se obtiene la instancia de Firestore
+        mfirestore = FirebaseFirestore.getInstance();//se obtiene la instancia de Firestore y se guarda en la variable mfirestore
 
 
         //todo miClase = new ClaseParaBBDD(this, "bbdd_aplicacion.db", null, 1);
@@ -108,7 +108,7 @@ public class Activity_Conciertos extends AppCompatActivity  {
 
         mfirestore.collection("conciertos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {//Task es una tarea que se ejecuta en segundo plano
                 if (task.isSuccessful()) {
                     listaConciertos.clear();
                     //resultado es un QuerySnapshot que contiene los documentos de la colección de Firestore.
@@ -117,7 +117,7 @@ public class Activity_Conciertos extends AppCompatActivity  {
                         listaConciertos.add(concierto);
                     }
                     // actuualiza la interfaz en el hilo principal
-                    runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable() {//se ejecuta en el hilo principal, sino no se podria modificar la interfaz
                         @Override
                         public void run() {
                             if (adaptador == null) {
@@ -149,7 +149,7 @@ public class Activity_Conciertos extends AppCompatActivity  {
 
             Intent intent = new Intent(Activity_Conciertos.this, ActivityEntradas.class);
             Bundle bundle = new Bundle();
-            bundle.putString("nombreConcierto", concierto.getNombreConciertos());
+            bundle.putString("nombreConcierto", concierto.getNombre());
             bundle.putString("fecha", concierto.getFecha());
             bundle.putString("lugar", concierto.getLugar());
             bundle.putString("ciudad", concierto.getCiudad());
@@ -168,7 +168,7 @@ public class Activity_Conciertos extends AppCompatActivity  {
         ArrayList<Conciertos> listaFiltrada = new ArrayList<>();
 
         for (Conciertos concierto : listaConciertos) {
-            if (concierto.getNombreConciertos().toLowerCase().contains(texto.toLowerCase())) {
+            if (concierto.getNombre().toLowerCase().contains(texto.toLowerCase())) {
                 listaFiltrada.add(concierto);
             }
         }

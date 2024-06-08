@@ -97,15 +97,15 @@ public class ClaseParaBBDD extends SQLiteOpenHelper implements IConciertosBD{
         if (cursor.moveToFirst()) {
             do {
                 Conciertos conciertos = new Conciertos();
-                conciertos.setNombreConciertos(cursor.getString(cursor.getColumnIndex("nombreConcierto")));
+                conciertos.setNombre(cursor.getString(cursor.getColumnIndex("nombreConcierto")));
                 conciertos.setFecha(cursor.getString(cursor.getColumnIndex("fecha")));
                 conciertos.setLugar(cursor.getString(cursor.getColumnIndex("lugar")));
                 conciertos.setCiudad(cursor.getString(cursor.getColumnIndex("ciudad")));
                 conciertos.setGenero(cursor.getString(cursor.getColumnIndex("genero")));
                 conciertos.setPrecio(cursor.getString(cursor.getColumnIndex("precio")));
 
-                int idImagen = cursor.getInt(cursor.getColumnIndex("imagenId"));
-                conciertos.setImagen(idImagen);
+                //int idImagen = cursor.getInt(cursor.getColumnIndex("imagenId"));
+                //conciertos.setImagen(idImagen);
                 conciertos.setCompraEntrada(cursor.getString(cursor.getColumnIndex("comprarEntrada")));
 
                 listaConciertos.add(conciertos);

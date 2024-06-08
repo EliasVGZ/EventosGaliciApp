@@ -59,7 +59,7 @@ public class AdaptadorPersonalizado_Conciertos extends RecyclerView.Adapter<Adap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Conciertos concierto = listaConciertos.get(position);
-        holder.tv_nombreConcierto.setText(concierto.getNombreConciertos());
+        holder.tv_nombreConcierto.setText(concierto.getNombre());
         holder.tv_lugarConcierto.setText(concierto.getLugar()+", "+concierto.getCiudad());
         holder.tv_fechaConcierto.setText(concierto.getFecha());
         holder.tv_generoConcierto.setText(concierto.getGenero());

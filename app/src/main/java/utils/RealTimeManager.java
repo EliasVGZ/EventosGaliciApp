@@ -56,7 +56,7 @@ public class RealTimeManager {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Conciertos concierto = postSnapshot.getValue(Conciertos.class);
                     conciertos.add(concierto);
-                    Log.d("FirebaseData", "Concierto: " + concierto.getNombreConciertos());
+                    Log.d("FirebaseData", "Concierto: " + concierto.getNombre());
                 }
                 conciertosLiveData.setValue(conciertos);
                 Log.d("FirebaseData", "Number of concerts read: " + conciertos.size());
