@@ -1,4 +1,4 @@
-package disenho;
+package adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,7 +20,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-import modelos.Conciertos;
+import models.Conciertos;
 
 public class AdaptadorPersonalizado_Conciertos extends RecyclerView.Adapter<AdaptadorPersonalizado_Conciertos.ViewHolder> {
 

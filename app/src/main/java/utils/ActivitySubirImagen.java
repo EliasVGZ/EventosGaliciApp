@@ -1,6 +1,5 @@
-package com.example.proyecto_eventos;
+package utils;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
@@ -9,17 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.example.proyecto_eventos.R;
 
-import modelos.Administrador;
-import modelos.Evento;
+import models.Administrador;
+import models.Evento;
 
 public class ActivitySubirImagen extends AppCompatActivity {
 

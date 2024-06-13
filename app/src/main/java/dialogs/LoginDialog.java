@@ -1,4 +1,4 @@
-package Dialogos;
+package dialogs;
 
 import static android.app.PendingIntent.getActivity;
 

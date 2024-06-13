@@ -7,12 +7,9 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -21,23 +18,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
-import controladores.ClaseParaBBDD;
-import disenho.AdaptadorPersonalizado_Conciertos;
-import disenho.ConciertosAdapter;
-import modelos.Conciertos;
+import java.util.ArrayList;
+
+import adapters.ConciertosAdapter;
+import controladores.FirebaseController;
+import models.Conciertos;
 
 public class ActivityEntradas extends AppCompatActivity implements View.OnClickListener{
 
@@ -48,17 +43,15 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
     private ConciertosAdapter conciertosAdapter;
     private FirebaseFirestore mfirestore;
     private String comprarEntrada, genero;
+    private FirebaseController firebaseController;
 
-    private RecyclerView rv_entradas;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entradas);
-        mfirestore = FirebaseFirestore.getInstance();//se obtiene la instancia de Firestore
-        //miClase = new ClaseParaBBDD(this, "bbdd_aplicacion.db", null, 1);
-        //db = miClase.getWritableDatabase();
-        //listaConciertos = (ArrayList<Conciertos>) miClase.lista();
+        firebaseController = new FirebaseController();
 
         metodosFind();
         metodosSetOn();
@@ -86,7 +79,7 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
     public void onResume() {
         super.onResume();
 
-        cargarDatos();
+        cargarArtistasRelacionados();
     }
 
 
@@ -96,10 +89,7 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
 
-            /*String imagenId = bundle.getString("imagen"); // Aquí recibo el id de la imagen
-            String nombreImagen = "concierto_" + imagenId;
-            int resId = getResources().getIdentifier(nombreImagen, "drawable", getPackageName());
-            iv_imagen_concierto.setImageResource(resId);*/
+
             String imagenUrl = bundle.getString("imagen"); // Aquí recibo la URL de la imagen
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imagenUrl);
@@ -134,26 +124,22 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
 
         }
     }
-    private void cargarDatos() {//se cargan los datos en el recyclerView horizontal
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        //Muestra los conciertos que tengan el mismo genero que el concierto seleccionado
-        db.collection("conciertos")
-                .whereEqualTo("genero", genero)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        listaConciertos.clear();
-                        String nombreArtistaSuperior = tv_artista.getText().toString().replace("Artista: ", "");
-                        for (Conciertos concierto : queryDocumentSnapshots.toObjects(Conciertos.class)) {
-                            if (!concierto
-                                    .getNombre().equals(nombreArtistaSuperior)) {//Si no es igual se va añadiendo a la lista
-                                listaConciertos.add(concierto);
-                            }
+    private void cargarArtistasRelacionados() {
+        firebaseController.cargarConciertosRelacionados(genero, new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    listaConciertos.clear();
+                    String nombreArtistaSuperior = tv_artista.getText().toString().replace("Artista: ", "");
+                    for (Conciertos concierto : task.getResult().toObjects(Conciertos.class)) {
+                        if (!concierto.getNombre().equals(nombreArtistaSuperior)) {
+                            listaConciertos.add(concierto);
                         }
-                        conciertosAdapter.actualizarDatos(listaConciertos);
                     }
-                });
+                    conciertosAdapter.actualizarDatos(listaConciertos);
+                }
+            }
+        });
     }
 
     private void volverMenu() {

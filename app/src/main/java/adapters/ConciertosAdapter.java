@@ -1,4 +1,4 @@
-package disenho;
+package adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,7 +22,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-import modelos.Conciertos;
+import models.Conciertos;
 
 public class ConciertosAdapter extends RecyclerView.Adapter<ConciertosAdapter.ConciertosViewHolder> {
     private ArrayList<Conciertos> listaConciertos;

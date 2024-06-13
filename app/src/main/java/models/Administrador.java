@@ -1,4 +1,4 @@
-package modelos;
+package models;
 
 import android.net.Uri;
 
@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -16,7 +14,6 @@ public class Administrador {
     private String nombre;
     private String contrasenha;
 
-    private FirebaseFirestore mfirestore;
 
     // Constructor
     public Administrador(String nombre) {
@@ -35,19 +32,15 @@ public class Administrador {
 
     // Métodos
     public void crearEvento(Evento evento) {
-        // Implementación para crear evento
     }
 
     public void editarEvento(Evento evento) {
-        // Implementación para editar evento
     }
 
     public void eliminarEvento(Evento evento) {
-        // Implementación para eliminar evento
     }
 
     public void crearOrganizador(Organizador organizador) {
-        // Implementación para crear organizador
     }
 
     public void subirImagenEvento(Evento evento, Uri fileUri) {
@@ -68,9 +61,7 @@ public class Administrador {
                 storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        // Aquí tienes la URL de descarga del archivo
                         String downloadUrl = uri.toString();
-                        // Aquí puedes hacer algo con la URL de descarga, como guardarla en la base de datos
                     }
                 });
             }

@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -30,9 +29,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-import controladores.ClaseParaBBDD;
-import disenho.AdaptadorPersonalizado_Conciertos;
-import modelos.Conciertos;
+import adapters.AdaptadorPersonalizado_Conciertos;
+import controladores.FirebaseController;
+import models.Conciertos;
 import utils.RealTimeManager;
 
 public class Activity_Conciertos extends AppCompatActivity  {
@@ -41,13 +40,13 @@ public class Activity_Conciertos extends AppCompatActivity  {
     private EditText et_buscador, et_filtro_ciudad;
     private ImageView opc_buscador, opc_filtro, opc_home, opc_preguntas;
     private LinearLayout ll_filtro_ciudad;
-    private ClaseParaBBDD miClase;
     private static SQLiteDatabase db;
     ArrayList<Conciertos> listaConciertos;
     private AdaptadorPersonalizado_Conciertos adaptador;
     private RealTimeManager realTimeManager;
-    private FirebaseFirestore mfirestore;
+
     private ProgressBar loader;
+    private FirebaseController firebaseController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +60,8 @@ public class Activity_Conciertos extends AppCompatActivity  {
         listaConciertos = new ArrayList<>();
 
         FirebaseApp.initializeApp(this);// se inicializa Firebase
-        mfirestore = FirebaseFirestore.getInstance();//se obtiene la instancia de Firestore y se guarda en la variable mfirestore
+        firebaseController = new FirebaseController();//se creo una instancia de FirebaseController
 
-
-        //todo miClase = new ClaseParaBBDD(this, "bbdd_aplicacion.db", null, 1);
-        //todo db = miClase.getWritableDatabase();
-        //todo listaConciertos = (ArrayList<Conciertos>) miClase.lista();
-        //todo setupRecyclerView(rv_conciertos, listaConciertos);
 
         setupRecyclerView(rv_conciertos, new ArrayList<>(listaConciertos));
 
@@ -103,21 +97,18 @@ public class Activity_Conciertos extends AppCompatActivity  {
     }
 
     private void cargarDatos() {
-
         loader.setVisibility(View.VISIBLE);
 
-        mfirestore.collection("conciertos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseController.cargarDatosConciertos(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {//Task es una tarea que se ejecuta en segundo plano
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     listaConciertos.clear();
-                    //resultado es un QuerySnapshot que contiene los documentos de la colección de Firestore.
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Conciertos concierto = document.toObject(Conciertos.class);
                         listaConciertos.add(concierto);
                     }
-                    // actuualiza la interfaz en el hilo principal
-                    runOnUiThread(new Runnable() {//se ejecuta en el hilo principal, sino no se podria modificar la interfaz
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if (adaptador == null) {
@@ -126,13 +117,11 @@ public class Activity_Conciertos extends AppCompatActivity  {
                             } else {
                                 adaptador.actualizarDatos(listaConciertos);
                             }
-                            // Oculta el ProgressBar una vez que los datos se han cargado
                             loader.setVisibility(View.GONE);
                         }
                     });
                 } else {
                     Log.d("Firestore", "Error al consultar documento: ", task.getException());
-                    // Oculta el ProgressBar una vez que los datos se han cargado
                     loader.setVisibility(View.GONE);
                 }
             }

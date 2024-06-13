@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Proyecto_Eventos"
         tools:targetApi="31">
         <activity
-            android:name=".ActivitySubirImagen"
+            android:name="utils.ActivitySubirImagen"
             android:exported="false" />
         <activity
             android:name=".Activity_Menu"
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="controladores.ActivityAdmin"
+            android:name="utils.ActivityCrearEventos"
             android:exported="false" />
         <activity
             android:name=".ActivityEntradas"
@@ -40,7 +40,7 @@
             android:name=".Activity_Conciertos"
             android:exported="false" />
         <activity
-            android:name="controladores.AdminLoginActivity"
+            android:name="utils.AdminLoginActivity"
             android:exported="false" />
     </application>
 

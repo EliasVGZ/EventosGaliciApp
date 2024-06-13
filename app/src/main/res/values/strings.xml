@@ -27,5 +27,7 @@
     <string name="mercar_entradas">Mercar Entradas</string>
     <string name="subir_imagen">SUBIR IMAGEN</string>
     <string name="selecciona_imagen">SELECCIONA IMAGEN</string>
-
+    <string name="concerto_existe">Xa existe un concerto con ese nome</string>
+    <string name="concerto_agregado">Concerto agregado</string>
+    <string name="concerto_erro">Erro</string>
 </resources>

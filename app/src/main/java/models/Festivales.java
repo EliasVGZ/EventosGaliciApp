@@ -1,4 +1,4 @@
-package modelos;
+package models;
 
 public class Festivales extends Evento{
 

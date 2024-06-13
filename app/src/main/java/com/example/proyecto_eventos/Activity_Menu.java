@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import Dialogos.LoginDialog;
+import dialogs.LoginDialog;
 
 public class Activity_Menu extends AppCompatActivity implements View.OnClickListener{
 

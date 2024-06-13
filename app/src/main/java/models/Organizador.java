@@ -1,4 +1,4 @@
-package modelos;
+package models;
 
 public class Organizador {
     private String nombre;
@@ -24,7 +24,6 @@ public class Organizador {
 
     // Métodos
     public void crearEvento(Evento evento) {
-        // Implementación para crear evento
     }
 }
 

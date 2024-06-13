@@ -1,4 +1,4 @@
-package controladores;
+package utils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,7 +47,7 @@ public class AdminLoginActivity extends AppCompatActivity {
                                 String adminPassword = documentSnapshot.getString("password");
 
                                 if (username.equals(adminUsername) && password.equals(adminPassword)) {
-                                    Intent intent = new Intent(AdminLoginActivity.this, ActivityAdmin.class);
+                                    Intent intent = new Intent(AdminLoginActivity.this, ActivityCrearEventos.class);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(AdminLoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();

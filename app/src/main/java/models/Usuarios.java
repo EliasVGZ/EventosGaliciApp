@@ -1,4 +1,4 @@
-package modelos;
+package models;
 
 public class Usuarios {
 
@@ -27,15 +27,9 @@ public Usuarios(String nombreUsuario, String contrasena) {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-    public void verEvento(Evento evento) {
-        // Implementación para ver evento
-    }
 
-    public void comprarEntrada(Evento evento) {
-        // Implementación para comprar entrada
-    }
 
-    public void opinar(Evento evento, String opinion) {
-        // Implementación para opinar
-    }
+
+
+
 }
