@@ -1,4 +1,4 @@
-# **EventosGaliciaApp**
+# **EventosGaliApp**
 **EventosGaliciaApp** es una aplicación desarrollada en Java en AndroidStudio que gestiona eventos como conciertos, festivales y fiestas populares en Galicia. Utiliza Firebase para almacenar y sincronizar datos en tiempo real, ofreciendo una solución completa para la organización y gestión de eventos.
 
 ## **Características**
@@ -43,8 +43,6 @@
 4. Empuja los cambios a la rama (`git push origin feature/nueva-funcionalidad`).
 5. Abre un Pull Request.
 
-## **Licencia**
-Este proyecto está licenciado bajo la Licencia MIT. Para más detalles, consulta el archivo [LICENSE](LICENSE).
 
 ## **Badges**
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
@@ -53,4 +51,4 @@ Este proyecto está licenciado bajo la Licencia MIT. Para más detalles, consult
 
 ---
 
-¡Gracias por usar **Jastas-Pista**! 
+¡Gracias por usar **EventosGaliApp**! 
