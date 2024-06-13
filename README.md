@@ -1,18 +1,18 @@
-# **EventosGaliApp**
+# **EventosGaliciApp**
 **EventosGaliciaApp** es una aplicación desarrollada en Java en AndroidStudio que gestiona eventos como conciertos, festivales y fiestas populares en Galicia. Utiliza Firebase para almacenar y sincronizar datos en tiempo real, ofreciendo una solución completa para la organización y gestión de eventos.
 
 ## **Características**
-- **Registro y autenticación de usuarios**: Permite a los usuarios registrarse e iniciar sesión de forma segura.
-- **Visualización de detalles de eventos**: Información detallada sobre la fecha, hora, lugar y descripción de cada evento.
-- **Compra de entradas**: Facilita la adquisición de entradas para los eventos.
-- **Notificaciones push en tiempo real**: Mantiene a los usuarios informados sobre actualizaciones y recordatorios de eventos.
+- **Registro y autenticación de usuarios**: 🔐 Permite a los usuarios registrarse e iniciar sesión de forma segura.
+- **Visualización de detalles de eventos**: 📅 Información detallada sobre la fecha, hora, lugar y descripción de cada evento.
+- **Compra de entradas**: 🎟️ Facilita la adquisición de entradas para los eventos.
+- **Notificaciones push en tiempo real**: 🔔 Mantiene a los usuarios informados sobre actualizaciones y recordatorios de eventos.
 
 ## **Tecnologías utilizadas**
-- **Lenguaje de programación Java**
-- **Firebase Realtime Database** 
-- **Firebase Authentication**
-- **Firebase Cloud Messaging**
-- **Librería Firebase UI para Android Studio**
+- **Lenguaje de programación Java**  
+- **Firebase Realtime Database**  
+- **Firebase Authentication**  
+- **Firebase Cloud Messaging**  
+- **Librería Firebase UI para Android Studio**  
 
 ## **Instalación y configuración**
 1. **Clonar el repositorio**:
@@ -43,7 +43,6 @@
 4. Empuja los cambios a la rama (`git push origin feature/nueva-funcionalidad`).
 5. Abre un Pull Request.
 
-
 ## **Badges**
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
 ![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
@@ -51,4 +50,4 @@
 
 ---
 
-¡Gracias por usar **EventosGaliApp**! 
+¡Gracias por usar **EventosGaliApp**!
