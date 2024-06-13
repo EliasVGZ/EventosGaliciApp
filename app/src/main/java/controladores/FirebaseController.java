@@ -1,5 +1,7 @@
 package controladores;
 
+import android.widget.CheckBox;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,5 +21,11 @@ public class FirebaseController {
 
     public void cargarConciertosRelacionados(String genero, OnCompleteListener<QuerySnapshot> listener) {
         db.collection("conciertos").whereEqualTo("genero", genero).get().addOnCompleteListener(listener);
+    }
+    public void cargarConciertosPorCiudad(CheckBox checkBox, OnCompleteListener<QuerySnapshot> listener) {
+        if (checkBox.isChecked()) {
+            String ciudad = checkBox.getText().toString();
+            db.collection("conciertos").whereEqualTo("ciudad", ciudad).get().addOnCompleteListener(listener);
+        }
     }
 }

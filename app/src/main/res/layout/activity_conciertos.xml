@@ -19,8 +19,6 @@
         android:visibility="gone"/>
 
 
-
-
         <EditText
             android:id="@+id/et_buscador"
             android:layout_width="match_parent"
@@ -39,41 +37,50 @@
 
 
 
-        <LinearLayout
-            android:id="@+id/ll_filtro_ciudad"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/ll_filtro_ciudad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        android:background="@drawable/edittext_background">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:visibility="gone"
-            android:background="@drawable/edittext_background">
+            android:text="@string/provincias"
+            android:textColor="#8BC34A"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
+            android:paddingLeft="16dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cidade"
-                android:textColor="#8BC34A"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-light"
-                android:textStyle="bold"
-                android:paddingLeft="16dp"/>
+        <CheckBox
+            android:id="@+id/cb_acoruna"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/a_corunha" />
 
-            <EditText
-                android:id="@+id/et_filtro_ciudad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/filtra_nas_cidades"
-                android:gravity="center"
-                android:textColor="#8BC34A"
-                android:padding="10dp"
-                android:drawablePadding="10dp"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-light"
-                android:textStyle="bold"
-                android:background="@android:color/transparent"
-                android:layout_gravity="center" />
+        <CheckBox
+            android:id="@+id/cb_pontevedra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pontevedra" />
 
-        </LinearLayout>
+        <CheckBox
+            android:id="@+id/cb_ourense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ourense" />
+
+        <CheckBox
+            android:id="@+id/cb_lugo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lugo" />
+
+    </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -84,7 +91,6 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <include
-        layout="@layout/toolbar_foot"/>
+    <include layout="@layout/toolbar_foot" />
 
 </LinearLayout>

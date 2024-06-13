@@ -5,7 +5,7 @@
     <string name="festivais">FESTIVAIS</string>
     <string name="festPopulares">FESTAS POPULARES</string>
     <string name="atopa_o_teu_concerto_favorito">Atopa o teu concerto favorito</string>
-    <string name="cidade">Cidade :</string>
+    <string name="provincias">Provincias :</string>
     <string name="filtra_nas_cidades">Filtra nas cidades</string>
     <string name="ya_tengo_una_cuenta"><u>Xa tenho unha conta</u></string>
     <string name="iniciar_sesion">Iniciar Sesion</string>
@@ -30,4 +30,13 @@
     <string name="concerto_existe">Xa existe un concerto con ese nome</string>
     <string name="concerto_agregado">Concerto agregado</string>
     <string name="concerto_erro">Erro</string>
+
+    <!--Provincias-!-->
+    <string name="a_corunha">A Coruña</string>
+    <string name="pontevedra">Pontevedra</string>
+    <string name="ourense">Ourense</string>
+    <string name="lugo">Lugo</string>
+    <string name="crear_usuario">Crear Usuario</string>
+    <string name="contrasinal">Contrasinal</string>
+    <string name="email">Email</string>
 </resources>

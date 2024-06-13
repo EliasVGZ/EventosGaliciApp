@@ -14,6 +14,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,6 +49,7 @@ public class Activity_Conciertos extends AppCompatActivity  {
 
     private ProgressBar loader;
     private FirebaseController firebaseController;
+    private CheckBox cb_acoruna, cb_lugo, cb_ourense, cb_pontevedra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +69,10 @@ public class Activity_Conciertos extends AppCompatActivity  {
         setupRecyclerView(rv_conciertos, new ArrayList<>(listaConciertos));
 
         buscadorConciertos();
-        filtradorCiudad();
+        filtradorProvincia();
         listenerBuscador();
         listenerFiltroCiudad();
         volverMenu();
-
-
-
-
     }
 
     private void volverMenu() {
@@ -163,26 +162,7 @@ public class Activity_Conciertos extends AppCompatActivity  {
         }
 
         //se actualiza la lista con lo buscado
-        adaptador = new AdaptadorPersonalizado_Conciertos(
-                this, listaFiltrada
-        );
-        rv_conciertos.setAdapter(adaptador);
-    }
-
-    private void filtrarCiudad(String texto){
-        ArrayList<Conciertos> listaFiltrada = new ArrayList<>();
-
-        for (Conciertos concierto : listaConciertos) {
-            if (concierto.getCiudad().toLowerCase().contains(texto.toLowerCase())) {
-                listaFiltrada.add(concierto);
-            }
-        }
-
-        //se actualiza la lista con lo buscado
-        adaptador = new AdaptadorPersonalizado_Conciertos(
-                this, listaFiltrada
-        );
-        rv_conciertos.setAdapter(adaptador);
+        setupRecyclerView(rv_conciertos, listaFiltrada);
     }
 
     private void metodosFind() {
@@ -190,7 +170,10 @@ public class Activity_Conciertos extends AppCompatActivity  {
         rv_conciertos = findViewById(R.id.rv_conciertos);
         opc_buscador = findViewById(R.id.opc_buscador);
         opc_filtro = findViewById(R.id.opc_filtro);
-        et_filtro_ciudad = findViewById(R.id.et_filtro_ciudad);
+        cb_acoruna = findViewById(R.id.cb_acoruna);
+        cb_lugo = findViewById(R.id.cb_lugo);
+        cb_ourense = findViewById(R.id.cb_ourense);
+        cb_pontevedra = findViewById(R.id.cb_pontevedra);
         ll_filtro_ciudad = findViewById(R.id.ll_filtro_ciudad);
         opc_home = findViewById(R.id.opc_home);
         loader = findViewById(R.id.loader);
@@ -199,21 +182,24 @@ public class Activity_Conciertos extends AppCompatActivity  {
     //ocultar el editext cuando se hace click en cualquier parte de la pantalla
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {//action down es cuando se hace click hacia abajo en la pantalla
-            if (et_buscador.isShown() || ll_filtro_ciudad.isShown()) {
-                Rect outRect = new Rect();//un Rect es un rectángulo con coordenadas enteras que sirve para almacenar los límites de un rectángulo
-                et_buscador.getGlobalVisibleRect(outRect);//obtiene los límites del EditText
-                ll_filtro_ciudad.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
-                    et_buscador.setText("");
-                    et_filtro_ciudad.setText("");
-                    et_buscador.setVisibility(View.GONE);
-                    ll_filtro_ciudad.setVisibility(View.GONE);
-                    return true;
-                }
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            Rect outRectBuscador = new Rect();
+            Rect outRectFiltro = new Rect();
+            Rect outRectConciertos = new Rect();
+            et_buscador.getGlobalVisibleRect(outRectBuscador);
+            ll_filtro_ciudad.getGlobalVisibleRect(outRectFiltro);
+            rv_conciertos.getGlobalVisibleRect(outRectConciertos);
+            if (et_buscador.isShown() && !outRectBuscador.contains((int)event.getRawX(), (int)event.getRawY()) && !outRectConciertos.contains((int)event.getRawX(), (int)event.getRawY())) {
+                et_buscador.setText("");
+                et_buscador.setVisibility(View.GONE);
+                return true;
+            }
+            if (ll_filtro_ciudad.isShown() && !outRectFiltro.contains((int)event.getRawX(), (int)event.getRawY()) && !outRectConciertos.contains((int)event.getRawX(), (int)event.getRawY())) {
+                ll_filtro_ciudad.setVisibility(View.GONE);
+                return true;
             }
         }
-        return super.dispatchTouchEvent(event);//retorna el evento
+        return super.dispatchTouchEvent(event);
     }
 
     private void listenerFiltroCiudad() {
@@ -236,25 +222,54 @@ public class Activity_Conciertos extends AppCompatActivity  {
         });
     }
 
-    private void filtradorCiudad() {
-        //Filtrar por ciudad
-        et_filtro_ciudad.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // puede estar vacio
-            }
+    private void filtradorProvincia() {
+        ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+        checkBoxes.add(cb_acoruna);
+        checkBoxes.add(cb_lugo);
+        checkBoxes.add(cb_ourense);
+        checkBoxes.add(cb_pontevedra);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // se filtra  la lista de conciertos
-                filtrarCiudad(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // No  hacer nada aquí
-            }
-        });
+        for (CheckBox checkBox : checkBoxes) {
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        for (CheckBox otherCheckBox : checkBoxes) {
+                            if (otherCheckBox != checkBox) {
+                                otherCheckBox.setChecked(false);
+                            }
+                        }
+                        firebaseController.cargarConciertosPorCiudad(checkBox, new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    listaConciertos.clear();
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Conciertos concierto = document.toObject(Conciertos.class);
+                                        listaConciertos.add(concierto);
+                                    }
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (adaptador == null) {
+                                                adaptador = new AdaptadorPersonalizado_Conciertos(Activity_Conciertos.this, listaConciertos);
+                                                rv_conciertos.setAdapter(adaptador);
+                                            } else {
+                                                adaptador.actualizarDatos(listaConciertos);
+                                            }
+                                            loader.setVisibility(View.GONE);
+                                        }
+                                    });
+                                } else {
+                                    Log.d("Firestore", "Error al consultar documento: ", task.getException());
+                                    loader.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
     }
 
     private void buscadorConciertos() {
