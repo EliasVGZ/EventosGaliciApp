@@ -30,19 +30,20 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
-import adapters.ConciertosAdapter;
+import adapters.EventoAdapter;
 import controladores.FirebaseController;
 import models.Conciertos;
+import models.Evento;
 
 public class ActivityEntradas extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView tv_artista, tv_fecha, tv_lugar, tv_precioConcierto;
-    private ImageView iv_imagen_concierto, opc_home_entradas;
+    private TextView tv_evento, tv_fecha, tv_lugar, tv_precioEvento;
+    private ImageView iv_imagen_evento, opc_home_entradas;
     private Button btn_entradas;
-    private ArrayList<Conciertos> listaConciertos = new ArrayList<>();
-    private ConciertosAdapter conciertosAdapter;
+    private ArrayList<Evento> listaEventos = new ArrayList<>();
+    private EventoAdapter eventosAdapter;
     private FirebaseFirestore mfirestore;
-    private String comprarEntrada, genero;
+    private String comprarEntrada, genero, tipoEvento;
     private FirebaseController firebaseController;
 
 
@@ -59,19 +60,19 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         volverMenu();
 
 
-        RecyclerView recyclerViewConciertos = findViewById(R.id.rv_entradas);
+        RecyclerView recyclerViewEventos = findViewById(R.id.rv_entradas);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewConciertos.setLayoutManager(layoutManager);
+        recyclerViewEventos.setLayoutManager(layoutManager);
 
-        conciertosAdapter = new ConciertosAdapter(this, listaConciertos);
-        recyclerViewConciertos.setAdapter(conciertosAdapter);
+        eventosAdapter = new EventoAdapter(this, listaEventos);
+        recyclerViewEventos.setAdapter(eventosAdapter);
 
 
 
 
         //para que se vea un concierto a la vez
         PagerSnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(recyclerViewConciertos);
+        snapHelper.attachToRecyclerView(recyclerViewEventos);
 
     }
 
@@ -88,16 +89,13 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
     private void recibirDatosBundle() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-
-
             String imagenUrl = bundle.getString("imagen"); // Aquí recibo la URL de la imagen
-
             StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imagenUrl);
 
             storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Glide.with(ActivityEntradas.this).load(uri.toString()).into(iv_imagen_concierto);
+                    Glide.with(ActivityEntradas.this).load(uri.toString()).into(iv_imagen_evento);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -108,16 +106,17 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
 
 
 
-            String nombreConcierto = bundle.getString("nombreConcierto");
+            String nombreEvento = bundle.getString("nombreEvento");
             String fecha = bundle.getString("fecha");
             String lugar = bundle.getString("lugar");
             String ciudad = bundle.getString("ciudad");
             String precio = bundle.getString("precio");
-
             genero = bundle.getString("genero");
             comprarEntrada = bundle.getString("comprarEntrada");
-            tv_artista.setText("Artista: "+nombreConcierto);
-            tv_precioConcierto.setText("Precio: "+precio);
+            tipoEvento = bundle.getString("tipoEvento");
+
+            tv_evento.setText("Evento: "+nombreEvento);
+            tv_precioEvento.setText("Precio: "+precio);
             tv_fecha.setText("Fecha: "+fecha);
             tv_lugar.setText("Lugar: "+lugar+ ", "+ciudad);
 
@@ -125,21 +124,23 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         }
     }
     private void cargarArtistasRelacionados() {
-        firebaseController.cargarConciertosRelacionados(genero, new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    listaConciertos.clear();
-                    String nombreArtistaSuperior = tv_artista.getText().toString().replace("Artista: ", "");
-                    for (Conciertos concierto : task.getResult().toObjects(Conciertos.class)) {
-                        if (!concierto.getNombre().equals(nombreArtistaSuperior)) {
-                            listaConciertos.add(concierto);
+        if (tipoEvento != null) {
+            firebaseController.cargarEventosRelacionados(tipoEvento, genero, new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        listaEventos.clear();
+                        String nombreEventoSuperior = tv_evento.getText().toString().replace("Evento: ", "");
+                        for (Evento evento : task.getResult().toObjects(Evento.class)) {//convertir los objetos de la base de datos a objetos de la clase Evento
+                            if (!evento.getNombre().equals(nombreEventoSuperior)) {
+                                listaEventos.add(evento);
+                            }
                         }
+                        eventosAdapter.actualizarDatos(listaEventos);
                     }
-                    conciertosAdapter.actualizarDatos(listaConciertos);
                 }
-            }
-        });
+            });
+        }
     }
 
     private void volverMenu() {
@@ -159,11 +160,11 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
 
     private void metodosFind() {
         btn_entradas = findViewById(R.id.btn_entradas);
-        tv_artista = findViewById(R.id.tv_artista);
+        tv_evento = findViewById(R.id.tv_evento);
         tv_fecha = findViewById(R.id.tv_fecha);
         tv_lugar = findViewById(R.id.tv_lugar);
-        iv_imagen_concierto = findViewById(R.id.iv_imagen_concierto);
-        tv_precioConcierto = findViewById(R.id.tv_precioConcierto);
+        iv_imagen_evento = findViewById(R.id.iv_imagen_evento);
+        tv_precioEvento = findViewById(R.id.tv_precioEvento);
         opc_home_entradas = findViewById(R.id.opc_home_entradas);
     }
 

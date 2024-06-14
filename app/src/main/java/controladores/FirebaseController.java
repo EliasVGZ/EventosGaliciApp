@@ -15,17 +15,17 @@ public class FirebaseController {
         db = FirebaseFirestore.getInstance();
     }
 
-    public void cargarDatosConciertos(OnCompleteListener<QuerySnapshot> listener) {
-        db.collection("conciertos").get().addOnCompleteListener(listener);
+    public void cargarDatosEventos(String tipoEvento, OnCompleteListener<QuerySnapshot> listener) {
+        db.collection(tipoEvento).get().addOnCompleteListener(listener);
     }
 
-    public void cargarConciertosRelacionados(String genero, OnCompleteListener<QuerySnapshot> listener) {
-        db.collection("conciertos").whereEqualTo("genero", genero).get().addOnCompleteListener(listener);
+    public void cargarEventosRelacionados(String tipoEvento, String genero, OnCompleteListener<QuerySnapshot> listener) {
+        db.collection(tipoEvento).whereEqualTo("genero", genero).get().addOnCompleteListener(listener);
     }
-    public void cargarConciertosPorCiudad(CheckBox checkBox, OnCompleteListener<QuerySnapshot> listener) {
+    public void cargarEventosPorProvincia(String tipoEvento, CheckBox checkBox, OnCompleteListener<QuerySnapshot> listener) {
         if (checkBox.isChecked()) {
             String ciudad = checkBox.getText().toString();
-            db.collection("conciertos").whereEqualTo("ciudad", ciudad).get().addOnCompleteListener(listener);
+            db.collection(tipoEvento).whereEqualTo("ciudad", ciudad).get().addOnCompleteListener(listener);
         }
     }
 }

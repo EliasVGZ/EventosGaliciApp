@@ -16,7 +16,7 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/iv_concierto"
+            android:id="@+id/iv_evento"
             android:layout_width="150dp"
             android:layout_height="100dp"
             android:adjustViewBounds="true"
@@ -30,7 +30,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/tv_nombreConcierto"
+                android:id="@+id/tv_nombreEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#92C15B"
@@ -40,7 +40,7 @@
             </TextView>
 
             <TextView
-                android:id="@+id/tv_lugarConcierto"
+                android:id="@+id/tv_lugarEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
@@ -50,7 +50,7 @@
             </TextView>
 
             <TextView
-                android:id="@+id/tv_fechaConcierto"
+                android:id="@+id/tv_fechaEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
@@ -59,7 +59,7 @@
             </TextView>
 
             <TextView
-                android:id="@+id/tv_generoConcierto"
+                android:id="@+id/tv_generoEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
@@ -68,7 +68,7 @@
             </TextView>
 
             <TextView
-                android:id="@+id/tv_precioConcierto"
+                android:id="@+id/tv_precioEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"

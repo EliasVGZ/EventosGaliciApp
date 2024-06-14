@@ -22,50 +22,50 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-import models.Conciertos;
+import models.Evento;
 
-public class ConciertosAdapter extends RecyclerView.Adapter<ConciertosAdapter.ConciertosViewHolder> {
-    private ArrayList<Conciertos> listaConciertos;
+public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosViewHolder> {
+    private ArrayList<Evento> listaEventos;
     private Context context;
 
-    public ConciertosAdapter(Context context, ArrayList<Conciertos> listaConciertos) {
+    public EventoAdapter(Context context, ArrayList<Evento> listaEventos) {
         this.context = context;
-        this.listaConciertos = listaConciertos;
+        this.listaEventos = listaEventos;
     }
 
     @NonNull
     @Override
-    public ConciertosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public EventosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_personalizado_foot, parent, false);
-        return new ConciertosViewHolder(view);
+        return new EventosViewHolder(view);
     }
     @SuppressLint("NotifyDataSetChanged")
-    public void actualizarDatos(ArrayList<Conciertos> nuevaLista) {
-        this.listaConciertos = nuevaLista;
+    public void actualizarDatos(ArrayList<Evento> nuevaLista) {
+        this.listaEventos = nuevaLista;
         notifyDataSetChanged();
     }
 
     //para cada item de la lista se le asigna un concierto
     @Override
-    public void onBindViewHolder(@NonNull ConciertosViewHolder holder, int position) {
-        Conciertos concierto = listaConciertos.get(position);
+    public void onBindViewHolder(@NonNull EventosViewHolder holder, int position) {
+        Evento evento = listaEventos.get(position);
 
         // Configura la información del concierto
-        holder.tv_nombreConcierto.setText(concierto.getNombre());
-        holder.tv_lugarConcierto.setText(concierto.getLugar());
-        holder.tv_fechaConcierto.setText(concierto.getFecha());
-        holder.tv_generoConcierto.setText(concierto.getGenero());
-        holder.tv_precioConcierto.setText(concierto.getPrecio());
+        holder.tv_nombreEvento.setText(evento.getNombre());
+        holder.tv_lugarEvento.setText(evento.getLugar());
+        holder.tv_fechaEvento.setText(evento.getFecha());
+        holder.tv_generoEvento.setText(evento.getGenero());
+        holder.tv_precioEvento.setText(evento.getPrecio());
 
         // Obtén la URL de descarga de Firebase Storage y carga la imagen con Glide
-        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(concierto.getImagenUrl());
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(evento.getImagenUrl());
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(context)
                         .load(uri.toString())
                         .fitCenter()
-                        .into(holder.iv_concierto);
+                        .into(holder.iv_evento);
             }
         });
     }
@@ -74,23 +74,22 @@ public class ConciertosAdapter extends RecyclerView.Adapter<ConciertosAdapter.Co
 
     @Override//metodo que devuelve el numero de elementos que tiene la lista
     public int getItemCount() {
-        return listaConciertos.size();
+        return listaEventos.size();
     }
 
     // Clase interna, que extiende de RecyclerView.ViewHolder para poder acceder a los elementos de la vista
-    public class ConciertosViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_nombreConcierto, tv_ciudad, tv_lugarConcierto, tv_fechaConcierto, tv_generoConcierto, tv_precioConcierto;
-        ImageView iv_concierto;
+    public class EventosViewHolder extends RecyclerView.ViewHolder {
+        TextView tv_nombreEvento, tv_lugarEvento, tv_fechaEvento, tv_generoEvento, tv_precioEvento;
+        ImageView iv_evento;
 
-        public ConciertosViewHolder(@NonNull View itemView) {
+        public EventosViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_nombreConcierto = itemView.findViewById(R.id.tv_nombreConcierto);
-            //tv_ciudad = itemView.findViewById(R.id.tv_ciudad);
-            tv_lugarConcierto = itemView.findViewById(R.id.tv_lugarConcierto);
-            tv_fechaConcierto = itemView.findViewById(R.id.tv_fechaConcierto);
-            tv_generoConcierto = itemView.findViewById(R.id.tv_generoConcierto);
-            tv_precioConcierto = itemView.findViewById(R.id.tv_precioConcierto);
-            iv_concierto = itemView.findViewById(R.id.iv_concierto);
+            tv_nombreEvento = itemView.findViewById(R.id.tv_nombreEvento);
+            tv_lugarEvento = itemView.findViewById(R.id.tv_lugarEvento);
+            tv_fechaEvento = itemView.findViewById(R.id.tv_fechaEvento);
+            tv_generoEvento = itemView.findViewById(R.id.tv_generoEvento);
+            tv_precioEvento = itemView.findViewById(R.id.tv_precioEvento);
+            iv_evento = itemView.findViewById(R.id.iv_evento);
 
             // ancho de la pantalla para que cada item se meta en una sola fila
             DisplayMetrics displayMetrics = new DisplayMetrics();

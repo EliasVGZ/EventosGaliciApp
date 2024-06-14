@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Proxecto_Eventos</string>
+    <string name="mas_eventos">Eventos relacionados</string>
+    <string name="concertos">CONCIERTOS</string>
+    <string name="festivais">FESTIVALES</string>
+    <string name="festPopulares">FIESTAS POPULARES</string>
+    <string name="atopa_o_teu_concerto_favorito">Encuentra tu concierto favorito</string>
+    <string name="atopa_o_teu_festival_favorito">Encuentra tu festival favorito</string>
+    <string name="atopa_a_tua_festa_popular_favorita">Encuentra tu fiesta popular favorita</string>
+    <string name="provincias">Provincias:</string>
+    <string name="filtra_nas_cidades">Filtra en las ciudades</string>
+    <string name="ya_tengo_una_cuenta"><u>Ya tengo una cuenta</u></string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="restablecer_contrasinal">Restablecer contraseña</string>
+    <string name="correo_electr_nico">Correo electrónico</string>
+    <string name="olvidaches_o_contrasinal">¿Olvidaste la contraseña?</string>
+    <!--Texto Toast-->
+    <string name="empty_fields">Hay campos vacíos.</string>
+    <string name="invalid_email">El correo electrónico no está bien formado</string>
+    <string name="short_password">La contraseña debe tener mínimo 6 caracteres</string>
+    <string name="inicio_sesion">Sesión iniciada</string>
+    <string name="error_sesion">Error en el inicio de sesión</string>
+    <string name="usuario_creado">Usuario creado correctamente.</string>
+    <string name="usuario_existe">El usuario ya existe.</string>
+    <string name="error_usuario">Error en el registro del usuario.</string>
+    <string name="envio_email">Correo para restablecer contraseña enviado.</string>
+    <string name="error_envio_email">Error al enviar correo para restablecer contraseña.</string>
+    <string name="mercar_entradas">Comprar Entradas</string>
+    <string name="subir_imagen">SUBIR IMAGEN</string>
+    <string name="selecciona_imagen">SELECCIONA IMAGEN</string>
+    <string name="concerto_existe">Ya existe un concierto con ese nombre</string>
+    <string name="concerto_agregado">Concierto añadido</string>
+    <string name="concerto_erro">Error con el concierto</string>
+    <!--Provincias-->
+    <string name="a_corunha">A Coruña</string>
+    <string name="pontevedra">Pontevedra</string>
+    <string name="ourense">Ourense</string>
+    <string name="lugo">Lugo</string>
+    <string name="crear_usuario">Crear Usuario</string>
+    <string name="contrasinal">Contraseña</string>
+    <string name="email">Email</string>
+</resources>

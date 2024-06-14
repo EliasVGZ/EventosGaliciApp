@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradiente_main">
+    android:background="@drawable/fondo_resto">
     <include
-        layout="@layout/toolbar_menu"/>
+        layout="@layout/toolbar_eventos"/>
 
     <Space
         android:layout_width="match_parent"
@@ -84,7 +84,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_conciertos"
+        android:id="@+id/rv_eventos"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">

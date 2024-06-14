@@ -20,12 +20,12 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-import models.Conciertos;
+import models.Evento;
 
-public class AdaptadorPersonalizado_Conciertos extends RecyclerView.Adapter<AdaptadorPersonalizado_Conciertos.ViewHolder> {
+public class AdaptadorPersonalizado_Eventos extends RecyclerView.Adapter<AdaptadorPersonalizado_Eventos.ViewHolder> {
 
     private Context context;
-    private ArrayList<Conciertos> listaConciertos;
+    private ArrayList<Evento> listaEventos;
 
     private OnItemClickListener listener;
 
@@ -34,47 +34,48 @@ public class AdaptadorPersonalizado_Conciertos extends RecyclerView.Adapter<Adap
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void actualizarDatos(ArrayList<Conciertos> nuevaLista) {
-        this.listaConciertos = nuevaLista;
+    public void actualizarDatos(ArrayList<Evento> nuevaLista) {
+        this.listaEventos = nuevaLista;
         notifyDataSetChanged();
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Conciertos concierto);
+        void onItemClick(Evento evento);
     }
 
 
-    public AdaptadorPersonalizado_Conciertos(Context context, ArrayList<Conciertos> listaConciertos) {
+    public AdaptadorPersonalizado_Eventos(Context context, ArrayList<Evento> listaEventos) {
         this.context = context;
-        this.listaConciertos = listaConciertos;
+        this.listaEventos = listaEventos;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_personalizado_conciertos, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_personalizado_eventos, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Conciertos concierto = listaConciertos.get(position);
-        holder.tv_nombreConcierto.setText(concierto.getNombre());
-        holder.tv_lugarConcierto.setText(concierto.getLugar()+", "+concierto.getCiudad());
-        holder.tv_fechaConcierto.setText(concierto.getFecha());
-        holder.tv_generoConcierto.setText(concierto.getGenero());
-        holder.tv_precioConcierto.setText(String.valueOf(concierto.getPrecio()));
+        Evento evento = listaEventos.get(position);
+        //Conciertos concierto = listaConciertos.get(position);
+        holder.tv_nombreEvento.setText(evento.getNombre());
+        holder.tv_lugarEvento.setText(evento.getLugar()+", "+evento.getCiudad());
+        holder.tv_fechaEvento.setText(evento.getFecha());
+        holder.tv_generoEvento.setText(evento.getGenero());
+        holder.tv_precioEvento.setText(String.valueOf(evento.getPrecio()));
         //holder.iv_concierto.setImageResource(obtenerIdImagen(concierto.getImagen()));
 
         // Obtén la URL de descarga de Firebase Storage y carga la imagen con Glide
-        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(concierto.getImagenUrl());
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(evento.getImagenUrl());
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(context)
                         .load(uri.toString())
                         .fitCenter()
-                        .into(holder.iv_concierto);
+                        .into(holder.iv_evento);
             }
         });
 
@@ -82,7 +83,7 @@ public class AdaptadorPersonalizado_Conciertos extends RecyclerView.Adapter<Adap
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onItemClick(concierto);
+                    listener.onItemClick(evento);
                 }
             }
         });
@@ -90,28 +91,28 @@ public class AdaptadorPersonalizado_Conciertos extends RecyclerView.Adapter<Adap
 
     @Override//retorna la cantidad de elementos que tiene la lista
     public int getItemCount() {
-        return listaConciertos.size();
+        return listaEventos.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_nombreConcierto, tv_lugarConcierto, tv_fechaConcierto, tv_generoConcierto, tv_precioConcierto;
-        ImageView iv_concierto;
+        TextView tv_nombreEvento, tv_lugarEvento, tv_fechaEvento, tv_generoEvento, tv_precioEvento;
+        ImageView iv_evento;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_nombreConcierto = itemView.findViewById(R.id.tv_nombreConcierto);
-            tv_lugarConcierto = itemView.findViewById(R.id.tv_lugarConcierto);
-            tv_fechaConcierto = itemView.findViewById(R.id.tv_fechaConcierto);
-            tv_generoConcierto = itemView.findViewById(R.id.tv_generoConcierto);
-            tv_precioConcierto = itemView.findViewById(R.id.tv_precioConcierto);
-            iv_concierto = itemView.findViewById(R.id.iv_concierto);
+            tv_nombreEvento = itemView.findViewById(R.id.tv_nombreEvento);
+            tv_lugarEvento = itemView.findViewById(R.id.tv_lugarEvento);
+            tv_fechaEvento = itemView.findViewById(R.id.tv_fechaEvento);
+            tv_generoEvento = itemView.findViewById(R.id.tv_generoEvento);
+            tv_precioEvento = itemView.findViewById(R.id.tv_precioEvento);
+            iv_evento = itemView.findViewById(R.id.iv_evento);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION && listener != null) {
-                        listener.onItemClick(listaConciertos.get(position));
+                        listener.onItemClick(listaEventos.get(position));
                     }
                 }
             });

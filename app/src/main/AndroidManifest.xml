@@ -37,7 +37,7 @@
             android:name=".ActivityEntradas"
             android:exported="false" />
         <activity
-            android:name=".Activity_Conciertos"
+            android:name=".Activity_Eventos"
             android:exported="false" />
         <activity
             android:name="utils.AdminLoginActivity"

@@ -10,20 +10,20 @@
         android:id="@+id/usuario_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email" />
+        android:hint="@string/email" />
 
     <EditText
         android:id="@+id/con_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contrasinal"
+        android:hint="@string/contrasinal"
         android:inputType="textPassword"
         android:layout_marginBottom="10dp"/>
     <TextView
         android:id="@+id/tv_cuenta_olvidada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿Olvidaches o contrasinal?"
+        android:text="@string/olvidaches_o_contrasinal"
         android:layout_marginBottom="10dp"/>
 
     <Button

@@ -1,13 +1,15 @@
 <resources>
     <string name="app_name">Proxecto_Eventos</string>
-    <string name="mas_conciertos">Artistas relacionados</string>
+    <string name="mas_eventos">Eventos relacionados</string>
     <string name="concertos">CONCERTOS</string>
     <string name="festivais">FESTIVAIS</string>
     <string name="festPopulares">FESTAS POPULARES</string>
     <string name="atopa_o_teu_concerto_favorito">Atopa o teu concerto favorito</string>
+    <string name="atopa_o_teu_festival_favorito">Atopa o teu festival favorito</string>
+    <string name="atopa_a_tua_festa_popular_favorita">Atopa a tua festa favorita</string>
     <string name="provincias">Provincias :</string>
     <string name="filtra_nas_cidades">Filtra nas cidades</string>
-    <string name="ya_tengo_una_cuenta"><u>Xa tenho unha conta</u></string>
+    <string name="ya_tengo_una_cuenta"><u>Xa teño unha conta</u></string>
     <string name="iniciar_sesion">Iniciar Sesion</string>
     <string name="restablecer_contrasinal">Restablecer contrasinal</string>
     <string name="correo_electr_nico">Correo electrónico</string>
@@ -28,7 +30,7 @@
     <string name="subir_imagen">SUBIR IMAGEN</string>
     <string name="selecciona_imagen">SELECCIONA IMAGEN</string>
     <string name="concerto_existe">Xa existe un concerto con ese nome</string>
-    <string name="concerto_agregado">Concerto agregado</string>
+    <string name="concerto_agregado">Concerto engadido</string>
     <string name="concerto_erro">Erro</string>
 
     <!--Provincias-!-->
@@ -39,4 +41,5 @@
     <string name="crear_usuario">Crear Usuario</string>
     <string name="contrasinal">Contrasinal</string>
     <string name="email">Email</string>
+    <string name="olvidaches_o_contrasinal">¿Olvidaches o contrasinal?</string>
 </resources>
