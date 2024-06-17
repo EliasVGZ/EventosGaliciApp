@@ -12,28 +12,22 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/opc_login"
+            android:id="@+id/btn_gallego"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:scaleType="centerInside"
-            android:src="@drawable/icono_inicio_sesion" />
+            android:src="@drawable/icono_galicia" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
 
         <ImageView
-            android:id="@+id/opc_logo"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
-            android:src="@drawable/logo_mejorado2"/>
-        <ImageView
-            android:id="@+id/opc_puntos"
+            android:id="@+id/btn_espanol"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:scaleType="centerInside"
-            android:src="@drawable/puntos" />
+            android:src="@drawable/icono_espana" />
 
     </LinearLayout>
 

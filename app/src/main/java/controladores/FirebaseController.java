@@ -4,15 +4,19 @@ import android.widget.CheckBox;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class FirebaseController {
+    private FirebaseAuth mAuth;
 
     private FirebaseFirestore db;
 
     public FirebaseController() {
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public void cargarDatosEventos(String tipoEvento, OnCompleteListener<QuerySnapshot> listener) {
@@ -27,5 +31,12 @@ public class FirebaseController {
             String ciudad = checkBox.getText().toString();
             db.collection(tipoEvento).whereEqualTo("ciudad", ciudad).get().addOnCompleteListener(listener);
         }
+    }
+    public void obtenerRolUsuario(String uid, OnCompleteListener<DocumentSnapshot> listener) {
+        db.collection("usuarios").document(uid).get().addOnCompleteListener(listener);
+    }
+
+    public void cerrarSesion() {
+        mAuth.signOut();
     }
 }

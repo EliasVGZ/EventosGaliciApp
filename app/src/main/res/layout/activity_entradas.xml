@@ -7,10 +7,27 @@
 
     <include
         layout="@layout/toolbar_eventos"/>
+    <ImageView
+        android:id="@+id/iv_corazonNegro"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/corazon1"
+        android:layout_gravity="end">
+
+    </ImageView>
+    <ImageView
+        android:id="@+id/iv_corazonRojo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/corazon1"
+        android:layout_gravity="end"
+        android:visibility="gone">
+
+    </ImageView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="502dp"
+        android:layout_height="480dp"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 

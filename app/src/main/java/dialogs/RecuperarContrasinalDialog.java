@@ -63,7 +63,7 @@ public class RecuperarContrasinalDialog extends DialogFragment {
         });
 
         builder.setView(view)
-                .setTitle("Recuperar contrasinal");
+                .setTitle(R.string.restablecer_contrasinal);
 
         return builder.create();
     }

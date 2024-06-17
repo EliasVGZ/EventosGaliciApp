@@ -1,44 +1,160 @@
 package com.example.proyecto_eventos;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Locale;
 
+import controladores.FirebaseController;
 import dialogs.LoginDialog;
 
 public class Activity_Menu extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnConciertos, btnFestivales, btnFestPopulares;
-    private ImageView opc_login, btn_gallego, btn_espanol;
+    private ImageView opc_login, btn_gallego, btn_espanol, opc_puntos;
+    private FirebaseController fbcontroller = new FirebaseController();
+    private FirebaseUser user ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         metodosFind();
         metodosSetOn();
         setGallegoButtonListener();
         setEspanolButtonListener();
+        verificarInicioSesion();
+        mostrarMenuOpciones();
 
+
+    }
+
+    public void confirmarCierreSesion() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.cerrar_sesion)
+                .setMessage(R.string.seguro)
+                .setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Si el usuario confirma, se cierra la sesion
+                        fbcontroller.cerrarSesion();
+                    }
+                })
+                .setNegativeButton(R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+
+    private void verificarInicioSesion() {
         opc_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginDialog loginDialog = new LoginDialog();
-                loginDialog.show(getSupportFragmentManager(), "login dialog");
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) { //el usuario ha iniciado sesion
+                    fbcontroller.obtenerRolUsuario(user.getUid(), new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String rol = document.getString("rol");
+                                    String rolFormatted = rol.substring(0, 1).toUpperCase() + rol.substring(1).toLowerCase();
+                                    // MUESTRO EL menu con el rol del usuario
+                                    PopupMenu popup = new PopupMenu(Activity_Menu.this, opc_login);
+                                    popup.getMenuInflater().inflate(R.menu.menu_opciones, popup.getMenu());
+                                    MenuItem crearEventoItem = popup.getMenu().findItem(R.id.opcionRol);
+                                    crearEventoItem.setTitle(rolFormatted);
+                                    //Dentro de popup se crea un menu con las opciones, al clicar la opcion2 se cierra sesion
+                                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                        public boolean onMenuItemClick(MenuItem item) {
+                                            if (item.getItemId() == R.id.opcionSalir) {
+                                                confirmarCierreSesion();
+                                            }
+                                            return true;
+                                        }
+                                    });
+                                    popup.show();
+                                } else {
+                                    Log.d(TAG, "No existe el documento");
+                                }
+                            } else {
+                                Log.d(TAG, "FALLO-> ", task.getException());
+                            }
+                        }
+                    });
+                } else {
+                    // El usuario no ha iniciado sesión
+                    LoginDialog loginDialog = new LoginDialog();
+                    loginDialog.show(getSupportFragmentManager(), "login dialog");
+                }
             }
         });
     }
+
+    private void mostrarMenuOpciones() {
+        opc_puntos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if(user == null){
+                    PopupMenu popup = new PopupMenu(Activity_Menu.this, opc_puntos);
+                    popup.getMenuInflater().inflate(R.menu.menu_usuario, popup.getMenu());
+                    popup.show();
+                }
+                if (user != null) {
+                    fbcontroller.obtenerRolUsuario(user.getUid(), new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String rol = document.getString("rol");
+                                    PopupMenu popup = new PopupMenu(Activity_Menu.this, opc_puntos);
+                                    if (rol.equals("usuario")) {
+                                        popup.getMenuInflater().inflate(R.menu.menu_usuario, popup.getMenu());
+                                    } else if (rol.equals("administrador")) {
+                                        popup.getMenuInflater().inflate(R.menu.menu_administrador, popup.getMenu());
+                                    } else if (rol.equals("organizador")) {
+                                        popup.getMenuInflater().inflate(R.menu.menu_organizador, popup.getMenu());
+                                    }
+                                    popup.show();
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
 
     @Override
     protected void onResume() {
@@ -52,6 +168,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         opc_login.setOnClickListener(this);
         btn_gallego.setOnClickListener(this);
         btn_espanol.setOnClickListener(this);
+        opc_puntos.setOnClickListener(this);
 
     }
 
@@ -62,6 +179,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         opc_login = findViewById(R.id.opc_login);
         btn_gallego = findViewById(R.id.btn_gallego);
         btn_espanol = findViewById(R.id.btn_espanol);
+        opc_puntos = findViewById(R.id.opc_puntos);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -90,10 +208,10 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        Locale locale = new Locale(idioma);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
+        Locale locale = new Locale(idioma);// idioma seleccionado
+        Locale.setDefault(locale);// establecer idioma seleccionado como predeterminado
+        Configuration config = new Configuration();// configuracion de la aplicacion
+        config.locale = locale;// establecer idioma seleccionado
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         // guardar idioma seleccionado en las preferencias para usarlo la prox vez que se inicie la aapp
@@ -106,6 +224,8 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         finish();
         startActivity(intent);
     }
+
+
 
     private void setGallegoButtonListener() {
         btn_gallego.setOnClickListener(new View.OnClickListener() {

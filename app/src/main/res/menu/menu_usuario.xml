@@ -1,0 +1,5 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/opcionAgregarEvento"
+        android:title="@string/quieres_agregar_un_evento"/>
+</menu>

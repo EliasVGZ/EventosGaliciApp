@@ -10,11 +10,17 @@
     <string name="atopa_a_tua_festa_popular_favorita">Encuentra tu fiesta popular favorita</string>
     <string name="provincias">Provincias:</string>
     <string name="filtra_nas_cidades">Filtra en las ciudades</string>
-    <string name="ya_tengo_una_cuenta"><u>Ya tengo una cuenta</u></string>
+    <string name="ya_tengo_una_cuenta"><u>¡Ya tengo una cuenta!</u></string>
     <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="restablecer_contrasinal">Restablecer contraseña</string>
     <string name="correo_electr_nico">Correo electrónico</string>
     <string name="olvidaches_o_contrasinal">¿Olvidaste la contraseña?</string>
+    <string name="registro">Regístro</string>
+    <string name="prezo">Precio: </string>
+    <string name="cerrar_sesion">Cerrar sesión </string>
+    <string name="seguro">¿Estás seguro de que quieres cerrar la sesión? </string>
+    <string name="sair">Salir</string>
+    <string name="no">No</string>
     <!--Texto Toast-->
     <string name="empty_fields">Hay campos vacíos.</string>
     <string name="invalid_email">El correo electrónico no está bien formado</string>
@@ -40,4 +46,5 @@
     <string name="crear_usuario">Crear Usuario</string>
     <string name="contrasinal">Contraseña</string>
     <string name="email">Email</string>
+    <string name="quieres_agregar_un_evento">¿Quieres agregar un evento?</string>
 </resources>

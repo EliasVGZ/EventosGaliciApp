@@ -1,14 +1,8 @@
 package auxiliares;
 
-import android.annotation.SuppressLint;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyecto_eventos.R;
@@ -19,7 +13,7 @@ public class Auxiliar_Activity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_opciones, menu);
+        inflater.inflate(R.menu.menu_administrador, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

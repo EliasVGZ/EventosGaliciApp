@@ -94,8 +94,8 @@ public class LoginDialog extends DialogFragment {
         });
 
         builder.setView(view)
-                .setTitle("Regístro")
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.registro)
+                .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }

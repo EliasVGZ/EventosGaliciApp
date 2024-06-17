@@ -38,7 +38,7 @@ import models.Evento;
 public class ActivityEntradas extends AppCompatActivity implements View.OnClickListener{
 
     private TextView tv_evento, tv_fecha, tv_lugar, tv_precioEvento;
-    private ImageView iv_imagen_evento, opc_home_entradas;
+    private ImageView iv_imagen_evento, opc_home_entradas, iv_corazonRojo, iv_corazonNegro;
     private Button btn_entradas;
     private ArrayList<Evento> listaEventos = new ArrayList<>();
     private EventoAdapter eventosAdapter;
@@ -58,6 +58,7 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         metodosSetOn();
         recibirDatosBundle();
         volverMenu();
+        meGusta();
 
 
         RecyclerView recyclerViewEventos = findViewById(R.id.rv_entradas);
@@ -76,11 +77,20 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
 
     }
 
+    private void meGusta() {
+        iv_corazonNegro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iv_corazonNegro.setImageResource(R.drawable.corazon);
+            }
+        });
+    }
+
     @Override
     public void onResume() {
         super.onResume();
 
-        cargarArtistasRelacionados();
+        cargarEventoRelacionado();
     }
 
 
@@ -115,15 +125,16 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
             comprarEntrada = bundle.getString("comprarEntrada");
             tipoEvento = bundle.getString("tipoEvento");
 
-            tv_evento.setText("Evento: "+nombreEvento);
-            tv_precioEvento.setText("Precio: "+precio);
+            tv_evento.setText(nombreEvento);
+            String prezoString = getString(R.string.prezo);
+            tv_precioEvento.setText(prezoString + precio);
             tv_fecha.setText("Fecha: "+fecha);
             tv_lugar.setText("Lugar: "+lugar+ ", "+ciudad);
 
 
         }
     }
-    private void cargarArtistasRelacionados() {
+    private void cargarEventoRelacionado() {
         if (tipoEvento != null) {
             firebaseController.cargarEventosRelacionados(tipoEvento, genero, new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -166,6 +177,8 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         iv_imagen_evento = findViewById(R.id.iv_imagen_evento);
         tv_precioEvento = findViewById(R.id.tv_precioEvento);
         opc_home_entradas = findViewById(R.id.opc_home_entradas);
+        iv_corazonNegro = findViewById(R.id.iv_corazonNegro);
+        iv_corazonRojo = findViewById(R.id.iv_corazonRojo);
     }
 
     @Override

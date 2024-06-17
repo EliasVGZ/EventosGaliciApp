@@ -55,5 +55,8 @@
             android:textColor="@android:color/white"
             android:textSize="22sp"/>
     </LinearLayout>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_idiomas" />
 
 </LinearLayout>
