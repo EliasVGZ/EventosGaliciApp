@@ -289,6 +289,9 @@ public class Activity_Eventos extends AppCompatActivity  {
                                     }
                                 }
                             });
+                        }else{
+                            cargarDatos();
+
                         }
                     }
                 });

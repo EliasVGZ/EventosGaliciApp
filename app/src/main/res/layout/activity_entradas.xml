@@ -12,7 +12,8 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/corazon_negro"
-        android:layout_gravity="end">
+        android:layout_gravity="end"
+        android:visibility="invisible">
 
     </ImageView>
     <ImageView
@@ -27,7 +28,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="470dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4.5"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
@@ -48,7 +56,7 @@
             android:id="@+id/tv_precioEvento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textColor="#151414"
             android:layout_marginBottom="8dp"
             android:textStyle="bold"/>
@@ -57,7 +65,7 @@
             android:id="@+id/tv_fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textColor="#151414"
             android:layout_marginBottom="8dp"
             android:textStyle="bold"/>
@@ -66,7 +74,7 @@
             android:id="@+id/tv_lugar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textColor="#151414"
             android:layout_marginBottom="16dp"
             android:textStyle="bold"/>
@@ -80,36 +88,30 @@
             android:textStyle="bold|normal" />
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/tv_eventos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mas_eventos"
-            android:textSize="15sp"
-            android:textColor="#151414"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:textStyle="bold"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_entradas"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-        </androidx.recyclerview.widget.RecyclerView>
 
 
+            <TextView
+                android:id="@+id/tv_eventos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mas_eventos"
+                android:textSize="15sp"
+                android:textColor="#151414"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:textStyle="bold"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_entradas"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+            </androidx.recyclerview.widget.RecyclerView>
 
-
-
-
+    </LinearLayout>
     <include
         layout="@layout/toolbar_grupo"/>
 
-    </LinearLayout>
+
 
 </LinearLayout>
 
