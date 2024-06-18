@@ -35,7 +35,7 @@ import dialogs.LoginDialog;
 public class Activity_Menu extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnConciertos, btnFestivales, btnFestPopulares;
-    private ImageView opc_login, btn_gallego, btn_espanol, opc_puntos;
+    private ImageView opc_login, btn_gallego, btn_espanol, opc_puntos, btn_ingles;
     private FirebaseController fbcontroller = new FirebaseController();
     private FirebaseUser user ;
 
@@ -50,6 +50,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         metodosSetOn();
         setGallegoButtonListener();
         setEspanolButtonListener();
+        setEnglishButtonListener();
         verificarInicioSesion();
         mostrarMenuOpciones();
 
@@ -91,7 +92,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
                                     popup.getMenuInflater().inflate(R.menu.menu_opciones, popup.getMenu());
                                     MenuItem crearEventoItem = popup.getMenu().findItem(R.id.opcionRol);
                                     crearEventoItem.setTitle(rolFormatted);
-                                    //Dentro de popup se crea un menu con las opciones, al clicar la opcion2 se cierra sesion
+                                    //Dentro de popup se crea un menu con las opciones, al clicar la opcionsalir se cierra sesion
                                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                         public boolean onMenuItemClick(MenuItem item) {
                                             if (item.getItemId() == R.id.opcionSalir) {
@@ -169,6 +170,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         btn_gallego.setOnClickListener(this);
         btn_espanol.setOnClickListener(this);
         opc_puntos.setOnClickListener(this);
+        btn_ingles.setOnClickListener(this);
 
     }
 
@@ -180,6 +182,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         btn_gallego = findViewById(R.id.btn_gallego);
         btn_espanol = findViewById(R.id.btn_espanol);
         opc_puntos = findViewById(R.id.opc_puntos);
+        btn_ingles = findViewById(R.id.btn_ingles);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -201,7 +204,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
     }
     private void cambiarIdioma(String idioma) {
 
-        String idiomaActual = getResources().getConfiguration().locale.getLanguage();
+        String idiomaActual = getResources().getConfiguration().locale.toString();
 
         // si el idioma es el mismo no se actualizar
         if (idioma.equals(idiomaActual)) {
@@ -219,7 +222,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         editor.putString("idioma", idioma);
         editor.apply();
 
-        // Reinicia la actividad para aplicar los cambios
+        // se necesita reiniciar la actividad para aplicar los cambios, seguro habra otra forma mas dinamica de hacerlo, pero es la unica que pud encontrar
         Intent intent = getIntent();
         finish();
         startActivity(intent);
@@ -241,6 +244,14 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 cambiarIdioma("es");
+            }
+        });
+    }
+    private void setEnglishButtonListener() {
+        btn_ingles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cambiarIdioma("en");
             }
         });
     }

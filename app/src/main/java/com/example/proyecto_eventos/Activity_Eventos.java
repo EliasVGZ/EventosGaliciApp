@@ -50,7 +50,7 @@ public class Activity_Eventos extends AppCompatActivity  {
     private ProgressBar loader;
     private FirebaseController firebaseController;
     private CheckBox cb_acoruna, cb_lugo, cb_ourense, cb_pontevedra;
-    String tipoEvento;
+    private String tipoEvento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,7 @@ public class Activity_Eventos extends AppCompatActivity  {
         listenerBuscador();
         listenerFiltroCiudad();
         volverMenu();
+        cargarDatos();
     }
 
     private void volverMenu() {
@@ -94,7 +95,7 @@ public class Activity_Eventos extends AppCompatActivity  {
     public void onResume() {
         super.onResume();
 
-        cargarDatos();
+
     }
 
     private void cargarDatos() {

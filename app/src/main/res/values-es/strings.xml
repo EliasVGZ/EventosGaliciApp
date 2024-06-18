@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Proxecto_Eventos</string>
+    <string name="app_name">EventosGaliciApp</string>
     <string name="mas_eventos">Eventos relacionados</string>
-    <string name="concertos">CONCIERTOS</string>
-    <string name="festivais">FESTIVALES</string>
-    <string name="festPopulares">FIESTAS POPULARES</string>
+    <string name="concertos">Conciertos</string>
+    <string name="festivais">Festivales</string>
+    <string name="festPopulares">Fiestas Populares</string>
     <string name="atopa_o_teu_concerto_favorito">Encuentra tu concierto favorito</string>
     <string name="atopa_o_teu_festival_favorito">Encuentra tu festival favorito</string>
     <string name="atopa_a_tua_festa_popular_favorita">Encuentra tu fiesta popular favorita</string>
@@ -46,5 +46,5 @@
     <string name="crear_usuario">Crear Usuario</string>
     <string name="contrasinal">Contraseña</string>
     <string name="email">Email</string>
-    <string name="quieres_agregar_un_evento">¿Quieres agregar un evento?</string>
+    <string name="quieres_agregar_un_evento">¿Quieres anunciar un evento?</string>
 </resources>

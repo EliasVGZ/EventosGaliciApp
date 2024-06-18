@@ -20,7 +20,7 @@ public class FirebaseController {
     }
 
     public void cargarDatosEventos(String tipoEvento, OnCompleteListener<QuerySnapshot> listener) {
-        db.collection(tipoEvento).get().addOnCompleteListener(listener);
+        db.collection(tipoEvento).orderBy("fecha").get().addOnCompleteListener(listener);
     }
 
     public void cargarEventosRelacionados(String tipoEvento, String genero, OnCompleteListener<QuerySnapshot> listener) {

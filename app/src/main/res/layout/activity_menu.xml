@@ -25,7 +25,7 @@
             android:paddingEnd="40dp"
             android:text="@string/concertos"
             android:textColor="@android:color/white"
-            android:textSize="22sp"/>
+            android:textSize="20sp"/>
 
         <Space
             android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:paddingEnd="40dp"
             android:text="@string/festivais"
             android:textColor="@android:color/white"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -53,7 +53,7 @@
             android:paddingEnd="40dp"
             android:text="@string/festPopulares"
             android:textColor="@android:color/white"
-            android:textSize="22sp"/>
+            android:textSize="20sp"/>
     </LinearLayout>
     <include
         android:id="@+id/toolbar"

@@ -18,10 +18,16 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.proyecto_eventos.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginDialog extends DialogFragment {
 
@@ -29,6 +35,7 @@ public class LoginDialog extends DialogFragment {
     private Button submitButton;
     private TextView  tv_cuenta_creada;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @NonNull
     @Override
@@ -39,6 +46,7 @@ public class LoginDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_login, null);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         usernameInput = view.findViewById(R.id.username_input);
         passwordInput = view.findViewById(R.id.password_input);
@@ -70,8 +78,28 @@ public class LoginDialog extends DialogFragment {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), getString(R.string.usuario_creado), Toast.LENGTH_SHORT).show();
-                                    dismiss();
+                                    // consigo el UID
+                                    String uid = mAuth.getCurrentUser().getUid();
+
+                                    // aqui se crea un nuevo documento con el UID del usuario y de rol usuario.
+                                    Map<String, Object> user = new HashMap<>();
+                                    user.put("rol", "usuario");
+
+                                    db.collection("usuarios").document(uid)
+                                            .set(user)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getActivity(), getString(R.string.usuario_creado), Toast.LENGTH_SHORT).show();
+                                                    dismiss();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(getActivity(), getString(R.string.error_usuario), Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                 } else {
                                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                                         Toast.makeText(getActivity(), getString(R.string.usuario_existe), Toast.LENGTH_SHORT).show();

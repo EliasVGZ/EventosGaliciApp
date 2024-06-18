@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Proxecto_Eventos</string>
+    <string name="mas_eventos">Related Events</string>
+    <string name="concertos">Concerts</string>
+    <string name="festivais">Festivals</string>
+    <string name="festPopulares">Folk Festivals</string>
+    <string name="atopa_o_teu_concerto_favorito">Find your favorite concert</string>
+    <string name="atopa_o_teu_festival_favorito">Find your favorite festival</string>
+    <string name="atopa_a_tua_festa_popular_favorita">Find your favorite popular festival</string>
+    <string name="provincias">Provinces:</string>
+    <string name="filtra_nas_cidades">Filter by cities</string>
+    <string name="ya_tengo_una_cuenta"><u>I already have an account!</u></string>
+    <string name="iniciar_sesion">Log In</string>
+    <string name="restablecer_contrasinal">Reset Password</string>
+    <string name="correo_electr_nico">Email</string>
+    <string name="registro">Register</string>
+    <string name="prezo">Price:</string>
+    <string name="cerrar_sesion">Log Out</string>
+    <string name="seguro">Are you sure you want to log out?</string>
+    <string name="sair">Exit</string>
+    <string name="si" translatable="false">Yes</string>
+    <string name="no">No</string>
+    <!--Texto Toast-->
+    <string name="empty_fields">There are empty fields.</string>
+    <string name="invalid_email">The email is not well formed</string>
+    <string name="short_password">The password must be at least 6 characters long</string>
+    <string name="inicio_sesion">Logged in</string>
+    <string name="error_sesion">Log in error</string>
+    <string name="usuario_creado">User created successfully.</string>
+    <string name="usuario_existe">The user already exists.</string>
+    <string name="error_usuario">User registration error.</string>
+    <string name="envio_email">Email to reset password sent.</string>
+    <string name="error_envio_email">Error sending email to reset password.</string>
+    <string name="mercar_entradas">Buy Tickets</string>
+    <string name="subir_imagen">UPLOAD IMAGE</string>
+    <string name="selecciona_imagen">SELECT IMAGE</string>
+    <string name="concerto_existe">A concert with that name already exists</string>
+    <string name="concerto_agregado">Concert added</string>
+    <string name="concerto_erro">Error</string>
+    <!--Provincias-->
+    <string name="a_corunha">A Coruña</string>
+    <string name="pontevedra">Pontevedra</string>
+    <string name="ourense">Ourense</string>
+    <string name="lugo">Lugo</string>
+    <string name="crear_usuario">Create User</string>
+    <string name="contrasinal">Password</string>
+    <string name="email">Email</string>
+    <string name="olvidaches_o_contrasinal">Forgot your password?</string>
+    <string name="quieres_agregar_un_evento">Want to announce an event?</string>
+</resources>

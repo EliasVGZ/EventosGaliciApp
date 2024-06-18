@@ -86,7 +86,7 @@ public class IniciarSesionDialog extends DialogFragment {
         });
 
         builder.setView(view)
-                .setTitle("Iniciar sesión");
+                .setTitle(getString(R.string.iniciar_sesion));
 
         return builder.create();
     }

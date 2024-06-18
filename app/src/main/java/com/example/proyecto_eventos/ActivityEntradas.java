@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -29,16 +31,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import adapters.EventoAdapter;
 import controladores.FirebaseController;
-import models.Conciertos;
 import models.Evento;
 
 public class ActivityEntradas extends AppCompatActivity implements View.OnClickListener{
 
     private TextView tv_evento, tv_fecha, tv_lugar, tv_precioEvento;
-    private ImageView iv_imagen_evento, opc_home_entradas, iv_corazonRojo, iv_corazonNegro;
+    private ImageView iv_imagen_evento, opc_home_entradas, iv_corazon_rojo, iv_corazon_negro;
     private Button btn_entradas;
     private ArrayList<Evento> listaEventos = new ArrayList<>();
     private EventoAdapter eventosAdapter;
@@ -68,20 +70,25 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         eventosAdapter = new EventoAdapter(this, listaEventos);
         recyclerViewEventos.setAdapter(eventosAdapter);
 
-
-
-
         //para que se vea un concierto a la vez
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerViewEventos);
 
+        //Si usuario ha iniciado sesion, se muestra el corazon rojo
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            iv_corazon_negro.setVisibility(View.VISIBLE);
+        } else {
+            iv_corazon_negro.setVisibility(View.GONE);
+        }
+
     }
 
     private void meGusta() {
-        iv_corazonNegro.setOnClickListener(new View.OnClickListener() {
+        iv_corazon_negro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iv_corazonNegro.setImageResource(R.drawable.corazon);
+                iv_corazon_negro.setImageResource(R.drawable.corazon_rojo);
             }
         });
     }
@@ -123,11 +130,14 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
             String precio = bundle.getString("precio");
             genero = bundle.getString("genero");
             comprarEntrada = bundle.getString("comprarEntrada");
+            if(Objects.equals(comprarEntrada, "")){
+                btn_entradas.setVisibility(View.INVISIBLE);
+            }
             tipoEvento = bundle.getString("tipoEvento");
 
             tv_evento.setText(nombreEvento);
             String prezoString = getString(R.string.prezo);
-            tv_precioEvento.setText(prezoString + precio);
+            tv_precioEvento.setText(prezoString +" "+ precio);
             tv_fecha.setText("Fecha: "+fecha);
             tv_lugar.setText("Lugar: "+lugar+ ", "+ciudad);
 
@@ -177,8 +187,8 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
         iv_imagen_evento = findViewById(R.id.iv_imagen_evento);
         tv_precioEvento = findViewById(R.id.tv_precioEvento);
         opc_home_entradas = findViewById(R.id.opc_home_entradas);
-        iv_corazonNegro = findViewById(R.id.iv_corazonNegro);
-        iv_corazonRojo = findViewById(R.id.iv_corazonRojo);
+        iv_corazon_negro = findViewById(R.id.iv_corazonNegro);
+        iv_corazon_rojo = findViewById(R.id.iv_corazonRojo);
     }
 
     @Override

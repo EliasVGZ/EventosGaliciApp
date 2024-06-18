@@ -54,7 +54,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosVie
         holder.tv_nombreEvento.setText(evento.getNombre());
         holder.tv_lugarEvento.setText(evento.getLugar());
         holder.tv_fechaEvento.setText(evento.getFecha());
-        holder.tv_generoEvento.setText(evento.getGenero());
+        //holder.tv_generoEvento.setText(evento.getGenero());
         holder.tv_precioEvento.setText(evento.getPrecio());
 
         // Obtén la URL de descarga de Firebase Storage y carga la imagen con Glide
@@ -87,7 +87,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosVie
             tv_nombreEvento = itemView.findViewById(R.id.tv_nombreEvento);
             tv_lugarEvento = itemView.findViewById(R.id.tv_lugarEvento);
             tv_fechaEvento = itemView.findViewById(R.id.tv_fechaEvento);
-            tv_generoEvento = itemView.findViewById(R.id.tv_generoEvento);
+           //tv_generoEvento = itemView.findViewById(R.id.tv_generoEvento);
             tv_precioEvento = itemView.findViewById(R.id.tv_precioEvento);
             iv_evento = itemView.findViewById(R.id.iv_evento);
 
