@@ -45,14 +45,14 @@ dependencies {
     //DEPENDENCIAS GLIDE
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
-    implementation ("com.google.firebase:firebase-storage:19.2.2")
 
     implementation("androidx.lifecycle:lifecycle-livedata:2.4.1")//NO TOCAR!!
-
+     //Dependencias Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth:23.0.0")
     implementation("com.google.firebase:firebase-database")
+    implementation ("com.google.firebase:firebase-storage:19.2.2")
 
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation("com.google.firebase:firebase-database:21.0.0")

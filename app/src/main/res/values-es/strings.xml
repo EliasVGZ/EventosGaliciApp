@@ -17,10 +17,23 @@
     <string name="olvidaches_o_contrasinal">¿Olvidaste la contraseña?</string>
     <string name="registro">Regístro</string>
     <string name="prezo">Precio: </string>
+    <string name="prezo2">Precio </string>
     <string name="cerrar_sesion">Cerrar sesión </string>
     <string name="seguro">¿Estás seguro de que quieres cerrar la sesión? </string>
     <string name="sair">Salir</string>
     <string name="no">No</string>
+    <string name="selecciona_tipo_evento">Selecciona el tipo de Evento</string>
+    <string name="fecha">Fecha: </string>
+
+    <string name="nome_evento">Nombre Evento</string>
+    <string name="lugar">Lugar</string>
+    <string name="xenero">Genero</string>
+    <string name="imaxen_url">Imagen URL</string>
+    <string name="data">Fecha</string>
+    <string name="url_entrada">Url Comprar Entrada</string>
+    <string name="provincia">Provincia</string>
+    <string name="nome_id">Nombre ID</string>
+
     <!--Texto Toast-->
     <string name="empty_fields">Hay campos vacíos.</string>
     <string name="invalid_email">El correo electrónico no está bien formado</string>
@@ -35,9 +48,9 @@
     <string name="mercar_entradas">Comprar Entradas</string>
     <string name="subir_imagen">SUBIR IMAGEN</string>
     <string name="selecciona_imagen">SELECCIONA IMAGEN</string>
-    <string name="concerto_existe">Ya existe un concierto con ese nombre</string>
-    <string name="concerto_agregado">Concierto añadido</string>
-    <string name="concerto_erro">Error con el concierto</string>
+    <string name="concerto_existe">Ya existe un evento con ese nombre</string>
+    <string name="concerto_agregado">Evento añadido</string>
+    <string name="concerto_erro">Error en el evento</string>
     <!--Provincias-->
     <string name="a_corunha">A Coruña</string>
     <string name="pontevedra">Pontevedra</string>

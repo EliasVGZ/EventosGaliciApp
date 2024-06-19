@@ -31,6 +31,7 @@ import java.util.Locale;
 
 import controladores.FirebaseController;
 import dialogs.LoginDialog;
+import utils.ActivityCrearEventos;
 
 public class Activity_Menu extends AppCompatActivity implements View.OnClickListener{
 
@@ -38,6 +39,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
     private ImageView opc_login, btn_gallego, btn_espanol, opc_puntos, btn_ingles;
     private FirebaseController fbcontroller = new FirebaseController();
     private FirebaseUser user ;
+    private String tipoEventoSeleccionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,9 +144,17 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
                                         popup.getMenuInflater().inflate(R.menu.menu_usuario, popup.getMenu());
                                     } else if (rol.equals("administrador")) {
                                         popup.getMenuInflater().inflate(R.menu.menu_administrador, popup.getMenu());
-                                    } else if (rol.equals("organizador")) {
+                                    }else if(rol.equals("organizador")){
                                         popup.getMenuInflater().inflate(R.menu.menu_organizador, popup.getMenu());
                                     }
+                                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                        public boolean onMenuItemClick(MenuItem item) {
+                                            if (item.getItemId() == R.id.opcionCrearEvento) {
+                                                mostrarDialogoCrearEvento();
+                                            }
+                                            return true;
+                                        }
+                                    });
                                     popup.show();
                                 }
                             }
@@ -153,6 +163,56 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+    }
+
+    private void mostrarDialogoCrearEvento() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.selecciona_tipo_evento);
+
+        String[] tiposEventos = new String[]{
+                getString(R.string.concertos),
+                getString(R.string.festivais),
+                getString(R.string.festPopulares)
+        };
+        int checkedItem = 0; //0 por defecto
+        //por defecto el tipo de evento seleccionado es conciertos, sino no no me selecciona ninguno
+        tipoEventoSeleccionado = "conciertos";
+
+        builder.setSingleChoiceItems(tiposEventos, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        tipoEventoSeleccionado = "conciertos";
+                        break;
+                    case 1:
+                        tipoEventoSeleccionado = "festivales";
+                        break;
+                    case 2:
+                        tipoEventoSeleccionado = "fiestas_populares";
+                        break;
+                }
+            }
+        });
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Comprueba si el usuario ha seleccionado un tipo de evento
+                if (tipoEventoSeleccionado == null) {
+                    Toast.makeText(Activity_Menu.this, "Por favor, selecciona un tipo de evento para continuar", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(Activity_Menu.this, ActivityCrearEventos.class);
+                    intent.putExtra("tipoEvento", tipoEventoSeleccionado);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
@@ -215,7 +275,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         Locale.setDefault(locale);// establecer idioma seleccionado como predeterminado
         Configuration config = new Configuration();// configuracion de la aplicacion
         config.locale = locale;// establecer idioma seleccionado
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());// actualizar configuracion de la aplicacion
 
         // guardar idioma seleccionado en las preferencias para usarlo la prox vez que se inicie la aapp
         SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();

@@ -15,11 +15,22 @@
     <string name="correo_electr_nico">Correo electrónico</string>
     <string name="registro">Rexístro</string>
     <string name="prezo">Prezo: </string>
+    <string name="prezo2">Prezo </string>
     <string name="cerrar_sesion">Pechar Sesion </string>
     <string name="seguro">Estás seguro de que queres pechar a sesión? </string>
     <string name="sair">Sair</string>
     <string name="si" translatable="false">Si</string>
     <string name="no">Non</string>
+    <string name="selecciona_tipo_evento">Elixe o tipo de evento</string>
+    <string name="nome_evento">Nome Evento</string>
+    <string name="lugar">Lugar</string>
+    <string name="xenero">Xenero</string>
+    <string name="imaxen_url">Imaxen URL</string>
+    <string name="data">Data</string>
+    <string name="url_entrada">Url Mercar Entrada</string>
+    <string name="provincia">Provincia</string>
+    <string name="nome_id">Nome ID</string>
+    <string name="fecha">Data: </string>
 
     <!--Texto Toast-!-->
 

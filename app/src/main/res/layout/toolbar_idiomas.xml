@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/btn_ingles"
             android:layout_width="0dp"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/bandera_inglesa"
             android:layout_gravity="center"/>
@@ -26,9 +26,10 @@
         <ImageView
             android:id="@+id/btn_gallego"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:src="@drawable/icono_galicia" />
+            android:src="@drawable/icono_galicia"
+            android:layout_gravity="center"/>
 
 
         <Space
@@ -39,7 +40,7 @@
         <ImageView
             android:id="@+id/btn_espanol"
             android:layout_width="0dp"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/icono_espana"
             android:layout_gravity="center"/>

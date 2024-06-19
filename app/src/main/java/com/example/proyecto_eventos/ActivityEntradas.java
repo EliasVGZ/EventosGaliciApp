@@ -138,7 +138,8 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
             tv_evento.setText(nombreEvento);
             String prezoString = getString(R.string.prezo);
             tv_precioEvento.setText(prezoString +" "+ precio);
-            tv_fecha.setText("Fecha: "+fecha);
+            String fechaString = getString(R.string.fecha);
+            tv_fecha.setText(fechaString+" "+fecha);
             tv_lugar.setText("Lugar: "+lugar+ ", "+ciudad);
 
 
@@ -152,8 +153,8 @@ public class ActivityEntradas extends AppCompatActivity implements View.OnClickL
                     if (task.isSuccessful()) {
                         listaEventos.clear();
                         String nombreEventoSuperior = tv_evento.getText().toString().replace("Evento: ", "");
-                        for (Evento evento : task.getResult().toObjects(Evento.class)) {//convertir los objetos de la base de datos a objetos de la clase Evento
-                            if (!evento.getNombre().equals(nombreEventoSuperior)) {
+                        for (Evento evento : task.getResult().toObjects(Evento.class)) {
+                            if (evento.getNombre() != null && !evento.getNombre().equals(nombreEventoSuperior)) {
                                 listaEventos.add(evento);
                             }
                         }

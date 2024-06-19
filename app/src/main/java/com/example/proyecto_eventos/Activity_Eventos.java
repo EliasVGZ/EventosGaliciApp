@@ -39,13 +39,11 @@ import utils.RealTimeManager;
 public class Activity_Eventos extends AppCompatActivity  {
 
     private RecyclerView rv_eventos;
-    private EditText et_buscador, et_filtro_ciudad;
-    private ImageView opc_buscador, opc_filtro, opc_home, opc_preguntas;
+    private EditText et_buscador;
+    private ImageView opc_buscador, opc_filtro, opc_home;
     private LinearLayout ll_filtro_ciudad;
-    private static SQLiteDatabase db;
     ArrayList<Evento> listaEventos;
     private AdaptadorPersonalizado_Eventos adaptador;
-    private RealTimeManager realTimeManager;
 
     private ProgressBar loader;
     private FirebaseController firebaseController;
@@ -70,7 +68,7 @@ public class Activity_Eventos extends AppCompatActivity  {
 
         setupRecyclerView(rv_eventos, new ArrayList<>(listaEventos));
 
-        buscadorConciertos();
+        buscadorEventos();
         filtradorProvincia();
         listenerBuscador();
         listenerFiltroCiudad();
@@ -299,8 +297,7 @@ public class Activity_Eventos extends AppCompatActivity  {
         }
     }
 
-    private void buscadorConciertos() {
-        //Buscar por concierto
+    private void buscadorEventos() {
         et_buscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

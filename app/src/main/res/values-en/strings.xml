@@ -20,6 +20,7 @@
     <string name="sair">Exit</string>
     <string name="si" translatable="false">Yes</string>
     <string name="no">No</string>
+    <string name="fecha">Date: </string>
     <!--Texto Toast-->
     <string name="empty_fields">There are empty fields.</string>
     <string name="invalid_email">The email is not well formed</string>
@@ -34,8 +35,8 @@
     <string name="mercar_entradas">Buy Tickets</string>
     <string name="subir_imagen">UPLOAD IMAGE</string>
     <string name="selecciona_imagen">SELECT IMAGE</string>
-    <string name="concerto_existe">A concert with that name already exists</string>
-    <string name="concerto_agregado">Concert added</string>
+    <string name="concerto_existe">A event with that name already exists</string>
+    <string name="concerto_agregado">Event added</string>
     <string name="concerto_erro">Error</string>
     <!--Provincias-->
     <string name="a_corunha">A Coruña</string>

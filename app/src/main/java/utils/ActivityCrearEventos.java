@@ -1,119 +1,208 @@
 package utils;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.Manifest;
 
 import com.example.proyecto_eventos.R;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import controladores.FirebaseController;
+
 public class ActivityCrearEventos extends AppCompatActivity {
 
-    private EditText etCiudad, etCompraEntrada, etFecha, etGenero, etId, etImagen, etImagenUrl, etLugar, etNombreConciertos, etPrecio,  et_nombreId;
+    private EditText et_provincia, etCompraEntrada, etFecha, etGenero, etImagenUrl, etLugar, etNombreConciertos, etPrecio,  et_nombreId;
+    private Spinner sp_provincia;
     private FirebaseFirestore db;
+    private FirebaseController fbcontroller = new FirebaseController();
+    private String tipoEvento;
+    private ImageView iv_insertarImagen;
+    private Button btnSubmit, btn_subirImagen, btn_seleccionarImagen;
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+    private StorageReference miStorageRef;
+    private Uri imageUri;//se almacena la imagen seleccionada
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
-
-        etCiudad = findViewById(R.id.et_ciudad);
+        setContentView(R.layout.activity_crear_evento);
+        tipoEvento = getIntent().getStringExtra("tipoEvento");
+        sp_provincia = findViewById(R.id.sp_provincia);
         etCompraEntrada = findViewById(R.id.et_compraEntrada);
         etFecha = findViewById(R.id.et_fecha);
         etGenero = findViewById(R.id.et_genero);
-        etId = findViewById(R.id.et_id);
-        etImagen = findViewById(R.id.et_imagen);
         etImagenUrl = findViewById(R.id.et_imagenUrl);
         etLugar = findViewById(R.id.et_lugar);
         etNombreConciertos = findViewById(R.id.et_nombreConciertos);
         etPrecio = findViewById(R.id.et_precio);
         et_nombreId = findViewById(R.id.et_nombreId);
+        btnSubmit = findViewById(R.id.btn_submit);
+        btn_subirImagen = findViewById(R.id.btn_subirImagen);
+        btn_seleccionarImagen = findViewById(R.id.btn_seleccionarImagen);
+        iv_insertarImagen = findViewById(R.id.iv_insertarImagen);
 
+        miStorageRef = FirebaseStorage.getInstance().getReference();
+
+        //esto verifica si la app tiene permiso para acceder a la galeria, sino la tiene se lo pide a la persona
+        //mediante el metodo onRequestPermissionsResult
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
+
+
+
+        String[] provincias = new String[]{"","A Coruña", "Pontevedra", "Ourense", "Lugo"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, provincias);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_provincia.setAdapter(adapter);
         db = FirebaseFirestore.getInstance();
 
-        Button btnSubmit = findViewById(R.id.btn_submit);
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String nombreId = et_nombreId.getText().toString();
+                String ciudad = sp_provincia.getSelectedItem().toString();
+                String compraEntrada = etCompraEntrada.getText().toString();
+                String fecha = etFecha.getText().toString();
+                String genero = etGenero.getText().toString();
+                String imagenUrl = etImagenUrl.getText().toString();
+                String lugar = etLugar.getText().toString();
+                String nombre = etNombreConciertos.getText().toString();
+                String precio = etPrecio.getText().toString();
 
-                db.collection("conciertos").document(nombreId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                Toast.makeText(ActivityCrearEventos.this, R.string.concerto_existe, Toast.LENGTH_SHORT).show();
-                            } else {
-                                String ciudad = etCiudad.getText().toString();
-                                String compraEntrada = etCompraEntrada.getText().toString();
-                                String fecha = etFecha.getText().toString();
-                                String genero = etGenero.getText().toString();
-                                int id = Integer.parseInt(etId.getText().toString());
-                                String imagenUrl = etImagenUrl.getText().toString();
-                                String lugar = etLugar.getText().toString();
-                                String nombreConciertos = etNombreConciertos.getText().toString();
-                                String precio = etPrecio.getText().toString();
+                if (nombreId.isEmpty() || ciudad.isEmpty() || compraEntrada.isEmpty() || fecha.isEmpty() || genero.isEmpty() || imagenUrl.isEmpty() || lugar.isEmpty() || nombre.isEmpty() || precio.isEmpty()) {
+                    Toast.makeText(ActivityCrearEventos.this, "Todos os campos son obligatorios", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                                Map<String, Object> concierto = new HashMap<>();
-                                concierto.put("nombreId", nombreId);
-                                concierto.put("ciudad", ciudad);
-                                concierto.put("compraEntrada", compraEntrada);
-                                concierto.put("fecha", fecha);
-                                concierto.put("genero", genero);
-                                concierto.put("id", id);
-                                concierto.put("imagenUrl", imagenUrl);
-                                concierto.put("lugar", lugar);
-                                concierto.put("nombreConciertos", nombreConciertos);
-                                concierto.put("precio", precio);
+                Map<String, Object> evento = new HashMap<>();
+                evento.put("nombreId", nombreId);
+                evento.put("ciudad", ciudad);
+                evento.put("compraEntrada", compraEntrada);
+                evento.put("fecha", fecha);
+                evento.put("genero", genero);
+                evento.put("imagenUrl", imagenUrl);
+                evento.put("lugar", lugar);
+                evento.put("nombre", nombre);
+                evento.put("precio", precio);
 
-                                db.collection("conciertos").document(nombreId).set(concierto)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(ActivityCrearEventos.this, R.string.concerto_agregado, Toast.LENGTH_SHORT).show();
-                                                limpiarCampos();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(ActivityCrearEventos.this, R.string.concerto_erro, Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                fbcontroller.crearEvento(tipoEvento, nombreId, evento)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(ActivityCrearEventos.this, R.string.concerto_agregado, Toast.LENGTH_SHORT).show();
+                                limpiarCampos();
                             }
-                        } else {
-                            Log.d("Firestore", "Error al consultar documento: ", task.getException());
-                        }
-                    }
-                });
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(ActivityCrearEventos.this, R.string.concerto_erro, Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
+
+
+
+        //Seleccionar una iamgen dentro del movil
+        btn_seleccionarImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 100);
+            }
+        });
+
+        btn_subirImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageUri != null) {
+                    StorageReference fileReference = miStorageRef.child(tipoEvento + "/" + System.currentTimeMillis() + ".jpg");
+                    fileReference.putFile(imageUri)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            etImagenUrl.setText(uri.toString());
+                                            Toast.makeText(ActivityCrearEventos.this, "Imagen subida correctamente", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(ActivityCrearEventos.this, "Error al subir la imagen", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    Toast.makeText(ActivityCrearEventos.this, "No se seleccionó ninguna imagen", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+    }
+    //insertar la iamgen dentro de iv_insertarImagen
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 100) {
+            imageUri = data.getData();
+            iv_insertarImagen.setImageURI(imageUri);
+        }
     }
     private void limpiarCampos() {
         et_nombreId.setText("");
-        etCiudad.setText("");
+        sp_provincia.setSelection(0);
         etCompraEntrada.setText("");
         etFecha.setText("");
         etGenero.setText("");
-        etId.setText("");
         etImagenUrl.setText("");
         etLugar.setText("");
         etNombreConciertos.setText("");
         etPrecio.setText("");
+    }
+
+    //permiso para entrar en la galeria
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                }
+                return;
+            }
+        }
     }
 }
