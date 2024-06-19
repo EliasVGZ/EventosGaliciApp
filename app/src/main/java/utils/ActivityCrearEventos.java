@@ -190,6 +190,7 @@ public class ActivityCrearEventos extends AppCompatActivity {
         etLugar.setText("");
         etNombreConciertos.setText("");
         etPrecio.setText("");
+        iv_insertarImagen.setImageDrawable(null);
     }
 
     //permiso para entrar en la galeria

@@ -40,6 +40,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
     private FirebaseController fbcontroller = new FirebaseController();
     private FirebaseUser user ;
     private String tipoEventoSeleccionado;
+    private String rolUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_menu);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
+        rolUsuario = getIntent().getStringExtra("rolUsuario");
 
         metodosFind();
         metodosSetOn();
@@ -55,6 +57,16 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         setEnglishButtonListener();
         verificarInicioSesion();
         mostrarMenuOpciones();
+
+        if(rolUsuario != null){
+            if(rolUsuario.equals("administrador")){
+                opc_login.setImageDrawable(getDrawable(R.drawable.administrador));
+            }else if(rolUsuario.equals("organizador")){
+                opc_login.setImageDrawable(getDrawable(R.drawable.organizador));
+            }else{
+                opc_login.setImageDrawable(getDrawable(R.drawable.usuario));
+            }
+        }
 
 
     }
@@ -65,8 +77,10 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
                 .setMessage(R.string.seguro)
                 .setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // Si el usuario confirma, se cierra la sesion
+
                         fbcontroller.cerrarSesion();
+                        //cierra sesion y vuelve el logo original
+                        opc_login.setImageDrawable(getDrawable(R.drawable.icono_inicio_sesion));
                     }
                 })
                 .setNegativeButton(R.string.no, null)
@@ -81,37 +95,26 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
             public void onClick(View v) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) { //el usuario ha iniciado sesion
-                    fbcontroller.obtenerRolUsuario(user.getUid(), new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {
-                                    String rol = document.getString("rol");
-                                    String rolFormatted = rol.substring(0, 1).toUpperCase() + rol.substring(1).toLowerCase();
-                                    // MUESTRO EL menu con el rol del usuario
-                                    PopupMenu popup = new PopupMenu(Activity_Menu.this, opc_login);
-                                    popup.getMenuInflater().inflate(R.menu.menu_opciones, popup.getMenu());
-                                    MenuItem crearEventoItem = popup.getMenu().findItem(R.id.opcionRol);
-                                    crearEventoItem.setTitle(rolFormatted);
-                                    //Dentro de popup se crea un menu con las opciones, al clicar la opcionsalir se cierra sesion
-                                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                        public boolean onMenuItemClick(MenuItem item) {
-                                            if (item.getItemId() == R.id.opcionSalir) {
-                                                confirmarCierreSesion();
-                                            }
-                                            return true;
-                                        }
-                                    });
-                                    popup.show();
-                                } else {
-                                    Log.d(TAG, "No existe el documento");
-                                }
-                            } else {
-                                Log.d(TAG, "FALLO-> ", task.getException());
+                    if(rolUsuario != null){
+                        String rolFormatted = rolUsuario.substring(0, 1).toUpperCase() + rolUsuario.substring(1).toLowerCase();
+                        // MUESTRO EL menu con el rol del usuario
+                        PopupMenu popup = new PopupMenu(Activity_Menu.this, opc_login);
+                        popup.getMenuInflater().inflate(R.menu.menu_opciones, popup.getMenu());
+                        MenuItem crearEventoItem = popup.getMenu().findItem(R.id.opcionRol);
+                        crearEventoItem.setTitle(rolFormatted);
+
+
+                    //Dentro de popup se crea un menu con las opciones, al clicar la opcionsalir se cierra sesion
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if (item.getItemId() == R.id.opcionSalir) {
+                                confirmarCierreSesion();
                             }
+                            return true;
                         }
                     });
+                    popup.show();
+                    }
                 } else {
                     // El usuario no ha iniciado sesión
                     LoginDialog loginDialog = new LoginDialog();

@@ -1,8 +1,12 @@
 package dialogs;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,11 +17,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.proyecto_eventos.Activity_Menu;
 import com.example.proyecto_eventos.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import controladores.FirebaseController;
 
 public class IniciarSesionDialog extends DialogFragment {
 
@@ -25,6 +34,7 @@ public class IniciarSesionDialog extends DialogFragment {
     private TextView tv_cuenta_olvidada;
     private Button iniciar_sesion;
     private FirebaseAuth mAuth;
+    private FirebaseController fbcontroller ;
 
     @NonNull
     @Override
@@ -35,6 +45,7 @@ public class IniciarSesionDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_iniciar_sesion, null);
 
         mAuth = FirebaseAuth.getInstance();
+        fbcontroller = new FirebaseController();
 
         usuario_input = view.findViewById(R.id.usuario_input);
         con_input = view.findViewById(R.id.con_input);
@@ -66,8 +77,27 @@ public class IniciarSesionDialog extends DialogFragment {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), getString(R.string.inicio_sesion), Toast.LENGTH_SHORT).show();
-                                    dismiss();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    fbcontroller.obtenerRolUsuario(user.getUid(), new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
+                                                    String rol = document.getString("rol");
+                                                    Intent intent = new Intent(getActivity(), Activity_Menu.class);
+                                                    intent.putExtra("rolUsuario", rol);
+                                                    Toast.makeText(getActivity(), "Inició sesión como "+rol, Toast.LENGTH_SHORT).show();
+                                                    startActivity(intent);
+                                                    dismiss();
+                                                } else {
+                                                    Log.d(TAG, "No existe el documento");
+                                                }
+                                            } else {
+                                                Log.d(TAG, "FALLO-> ", task.getException());
+                                            }
+                                        }
+                                    });
                                 } else {
                                     Toast.makeText(getActivity(), getString(R.string.error_sesion), Toast.LENGTH_SHORT).show();
                                 }
