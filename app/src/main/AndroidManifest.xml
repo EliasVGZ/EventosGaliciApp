@@ -17,10 +17,8 @@
         android:theme="@style/Theme.Proyecto_Eventos"
         tools:targetApi="31">
         <activity
-            android:name="utils.ActivitySubirImagen"
-            android:exported="false" />
-        <activity
             android:name=".Activity_Menu"
+            android:launchMode="singleTop"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

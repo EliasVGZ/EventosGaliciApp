@@ -115,7 +115,7 @@ public class LoginDialog extends DialogFragment {
         tv_cuenta_creada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                dismiss();//cerrar el dialogo
                 IniciarSesionDialog iniciarSesionDialog = new IniciarSesionDialog();
                 iniciarSesionDialog.show(getFragmentManager(), "iniciar sesion dialog");
             }

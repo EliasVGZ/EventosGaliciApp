@@ -20,28 +20,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Seleccionar imagen"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:padding="16dp"/>
 
             <ImageView
                 android:id="@+id/iv_insertarImagen"
-                android:layout_width="match_parent"
+                android:layout_width="130dp"
                 android:layout_height="130dp"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"/>
 
             <Button
                 android:id="@+id/btn_subirImagen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subir_imagen"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:padding="16dp"/>
         </LinearLayout>
+        <ProgressBar
+            android:id="@+id/pb_esperaSubirImagen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+        </ProgressBar>
 
         <LinearLayout
             android:id="@+id/ll_rellenarEvento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:visibility="gone">
             <EditText
                 android:id="@+id/et_nombreId"
                 android:layout_width="match_parent"

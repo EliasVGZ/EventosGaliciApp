@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,11 +43,14 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
     private FirebaseUser user ;
     private String tipoEventoSeleccionado;
     private String rolUsuario;
+    private static final int REQUEST_CODE = 1;
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         rolUsuario = getIntent().getStringExtra("rolUsuario");
@@ -55,7 +60,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         setGallegoButtonListener();
         setEspanolButtonListener();
         setEnglishButtonListener();
-        verificarInicioSesion();
+        //verificarInicioSesion();
         mostrarMenuOpciones();
 
         if(rolUsuario != null){
@@ -68,8 +73,53 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
             }
         }
 
+        opc_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) { //el usuario ha iniciado sesion
+                    fbcontroller.obtenerRolUsuario(user.getUid(), new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String rolUsuario = document.getString("rol");
+                                    if(rolUsuario != null){
+                                        String rolFormatted = rolUsuario.substring(0, 1).toUpperCase() + rolUsuario.substring(1).toLowerCase();
+                                        // MUESTRO EL menu con el rol del usuario
+                                        PopupMenu popup = new PopupMenu(Activity_Menu.this, opc_login);
+                                        popup.getMenuInflater().inflate(R.menu.menu_opciones, popup.getMenu());
+                                        MenuItem crearEventoItem = popup.getMenu().findItem(R.id.opcionRol);
+                                        crearEventoItem.setTitle(rolFormatted);
+
+                                        //Dentro de popup se crea un menu con las opciones, al clicar la opcionsalir se cierra sesion
+                                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                            public boolean onMenuItemClick(MenuItem item) {
+                                                if (item.getItemId() == R.id.opcionSalir) {
+                                                    confirmarCierreSesion();
+                                                }
+                                                return true;
+                                            }
+                                        });
+                                        popup.show();
+                                    }
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    // El usuario no ha iniciado sesión
+                    LoginDialog loginDialog = new LoginDialog();
+                    loginDialog.show(getSupportFragmentManager(), "login dialog");
+                }
+            }
+        });
+
 
     }
+
+
 
     public void confirmarCierreSesion() {
         new AlertDialog.Builder(this)
@@ -89,40 +139,9 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void verificarInicioSesion() {
-        opc_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) { //el usuario ha iniciado sesion
-                    if(rolUsuario != null){
-                        String rolFormatted = rolUsuario.substring(0, 1).toUpperCase() + rolUsuario.substring(1).toLowerCase();
-                        // MUESTRO EL menu con el rol del usuario
-                        PopupMenu popup = new PopupMenu(Activity_Menu.this, opc_login);
-                        popup.getMenuInflater().inflate(R.menu.menu_opciones, popup.getMenu());
-                        MenuItem crearEventoItem = popup.getMenu().findItem(R.id.opcionRol);
-                        crearEventoItem.setTitle(rolFormatted);
 
 
-                    //Dentro de popup se crea un menu con las opciones, al clicar la opcionsalir se cierra sesion
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        public boolean onMenuItemClick(MenuItem item) {
-                            if (item.getItemId() == R.id.opcionSalir) {
-                                confirmarCierreSesion();
-                            }
-                            return true;
-                        }
-                    });
-                    popup.show();
-                    }
-                } else {
-                    // El usuario no ha iniciado sesión
-                    LoginDialog loginDialog = new LoginDialog();
-                    loginDialog.show(getSupportFragmentManager(), "login dialog");
-                }
-            }
-        });
-    }
+
 
     private void mostrarMenuOpciones() {
         opc_puntos.setOnClickListener(new View.OnClickListener() {
@@ -207,7 +226,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
                 } else {
                     Intent intent = new Intent(Activity_Menu.this, ActivityCrearEventos.class);
                     intent.putExtra("tipoEvento", tipoEventoSeleccionado);
-                    startActivity(intent);
+                    startActivityForResult(intent, REQUEST_CODE);
                 }
             }
         });
@@ -219,10 +238,52 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
     }
 
 
+    //Recibo la respuesta de la actividad ActivityCrearEventos
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            boolean verificarRolUsuario = data.getBooleanExtra("verificarRolUsuario", false);
+            if (verificarRolUsuario) {
+                actualizarIconoRolUsuario(user, opc_login, this);
+            }
+        }
+    }
+
+    public void actualizarIconoRolUsuario(FirebaseUser user, ImageView imageView, Context context) {
+        if (user != null) {
+            fbcontroller.obtenerRolUsuario(user.getUid(), new OnCompleteListener<DocumentSnapshot>() {
+                @SuppressLint("UseCompatLoadingForDrawables")
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            String rolUsuario = document.getString("rol");
+                            if(rolUsuario != null){
+                                if(rolUsuario.equals("administrador")){
+                                    imageView.setImageDrawable(context.getDrawable(R.drawable.administrador));
+                                }else if(rolUsuario.equals("organizador")){
+                                    imageView.setImageDrawable(context.getDrawable(R.drawable.organizador));
+                                }else{
+                                    imageView.setImageDrawable(context.getDrawable(R.drawable.usuario));
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        actualizarIconoRolUsuario(user, opc_login, this);
     }
 
     private void metodosSetOn() {

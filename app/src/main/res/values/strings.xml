@@ -23,6 +23,7 @@
     <string name="no">Non</string>
     <string name="selecciona_tipo_evento" translatable="false">Elixe o tipo de evento</string>
     <string name="fecha">Data:</string>
+    <string name="otro_evento">Queres agregar outro evento?</string>
 
     <!--Texto Toast-!-->
 

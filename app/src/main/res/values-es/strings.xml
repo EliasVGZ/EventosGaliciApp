@@ -24,6 +24,7 @@
     <string name="no">No</string>
     <string name="selecciona_tipo_evento">Selecciona el tipo de Evento</string>
     <string name="fecha">Fecha: </string>
+    <string name="otro_evento">¿Quieres agregar otro evento?</string>
 
     <string name="nome_evento">Nombre Evento</string>
     <string name="lugar">Lugar</string>

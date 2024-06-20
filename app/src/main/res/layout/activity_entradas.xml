@@ -83,7 +83,7 @@
             android:id="@+id/btn_entradas"
             android:layout_width="200sp"
             android:layout_height="50dp"
-            android:background="@drawable/button_style"
+            android:background="@drawable/redondeo_logo"
             android:text="@string/mercar_entradas"
             android:textStyle="bold|normal" />
 

@@ -31,6 +31,7 @@
     <string name="provincia">Provincia</string>
     <string name="nome_id">Nome ID</string>
     <string name="fecha">Data: </string>
+    <string name="otro_evento">Queres agregar outro evento?</string>
 
     <!--Texto Toast-!-->
 

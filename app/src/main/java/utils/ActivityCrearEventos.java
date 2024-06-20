@@ -1,5 +1,7 @@
 package utils;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 
+import com.example.proyecto_eventos.Activity_Menu;
 import com.example.proyecto_eventos.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,6 +50,8 @@ public class ActivityCrearEventos extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     private StorageReference miStorageRef;
     private Uri imageUri;//se almacena la imagen seleccionada
+    private ProgressBar pb_esperaSubirImagen;
+    private LinearLayout ll_rellenarEvento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,8 @@ public class ActivityCrearEventos extends AppCompatActivity {
         btn_subirImagen = findViewById(R.id.btn_subirImagen);
         btn_seleccionarImagen = findViewById(R.id.btn_seleccionarImagen);
         iv_insertarImagen = findViewById(R.id.iv_insertarImagen);
+        pb_esperaSubirImagen = findViewById(R.id.pb_esperaSubirImagen);
+        ll_rellenarEvento = findViewById(R.id.ll_rellenarEvento);
 
         miStorageRef = FirebaseStorage.getInstance().getReference();
 
@@ -115,8 +124,24 @@ public class ActivityCrearEventos extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(ActivityCrearEventos.this, R.string.concerto_agregado, Toast.LENGTH_SHORT).show();
-                                limpiarCampos();
+                                new AlertDialog.Builder(ActivityCrearEventos.this)
+                                        .setTitle(R.string.concerto_agregado)
+                                        .setMessage(R.string.otro_evento)
+                                        .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // El usuario quiere agregar otro evento, limpiar los campos
+                                                limpiarCampos();
+                                            }
+                                        })
+                                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Intent intent = new Intent(ActivityCrearEventos.this, Activity_Menu.class);
+                                                intent.putExtra("verificarRolUsuario", true);
+                                                setResult(RESULT_OK, intent);
+                                                finish();
+                                            }
+                                        })
+                                        .show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -135,7 +160,7 @@ public class ActivityCrearEventos extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 100);
+                startActivityForResult(intent, 100);//100 es el codigo de respuesta
             }
         });
 
@@ -143,7 +168,8 @@ public class ActivityCrearEventos extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (imageUri != null) {
-                    StorageReference fileReference = miStorageRef.child(tipoEvento + "/" + System.currentTimeMillis() + ".jpg");
+                    pb_esperaSubirImagen.setVisibility(View.VISIBLE);
+                    StorageReference fileReference = miStorageRef.child(tipoEvento + "/" + System.currentTimeMillis() + ".jpg");//nombre de la imagen
                     fileReference.putFile(imageUri)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -151,6 +177,8 @@ public class ActivityCrearEventos extends AppCompatActivity {
                                     fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
+                                            pb_esperaSubirImagen.setVisibility(View.GONE);
+                                            ll_rellenarEvento.setVisibility(View.VISIBLE);
                                             etImagenUrl.setText(uri.toString());
                                             Toast.makeText(ActivityCrearEventos.this, "Imagen subida correctamente", Toast.LENGTH_SHORT).show();
                                         }
