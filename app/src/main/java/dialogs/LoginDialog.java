@@ -74,9 +74,9 @@ public class LoginDialog extends DialogFragment {
                 }
 
                 mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {//se ejecuta cuando se completa la tarea
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+                            public void onComplete(@NonNull Task<AuthResult> task) {//task es la tarea que se ha completado
                                 if (task.isSuccessful()) {
                                     // consigo el UID
                                     String uid = mAuth.getCurrentUser().getUid();
@@ -91,7 +91,7 @@ public class LoginDialog extends DialogFragment {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Toast.makeText(getActivity(), getString(R.string.usuario_creado), Toast.LENGTH_SHORT).show();
-                                                    dismiss();
+                                                    dismiss();//
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
