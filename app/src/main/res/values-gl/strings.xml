@@ -32,6 +32,7 @@
     <string name="nome_id">Nome ID</string>
     <string name="fecha">Data: </string>
     <string name="otro_evento">Queres agregar outro evento?</string>
+    <string name="rol_inicio_sesion">Iniciou sesión como </string>
 
     <!--Texto Toast-!-->
 
@@ -60,6 +61,6 @@
     <string name="crear_usuario">Crear Usuario</string>
     <string name="contrasinal">Contrasinal</string>
     <string name="email">Email</string>
-    <string name="olvidaches_o_contrasinal">¿Olvidaches o contrasinal?</string>
-    <string name="quieres_agregar_un_evento">¿Queres anunciar un evento?</string>
+    <string name="olvidaches_o_contrasinal">Olvidaches o contrasinal?</string>
+    <string name="quieres_agregar_un_evento">Queres anunciar un evento?</string>
 </resources>

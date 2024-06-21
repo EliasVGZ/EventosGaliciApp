@@ -21,6 +21,7 @@
     <string name="si" translatable="false">Yes</string>
     <string name="no">No</string>
     <string name="fecha">Date: </string>
+    <string name="rol_inicio_sesion">Logged in as </string>
     <!--Texto Toast-->
     <string name="empty_fields">There are empty fields.</string>
     <string name="invalid_email">The email is not well formed</string>

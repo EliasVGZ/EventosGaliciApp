@@ -87,7 +87,7 @@ public class IniciarSesionDialog extends DialogFragment {
                                                     String rol = document.getString("rol");
                                                     Intent intent = new Intent(getActivity(), Activity_Menu.class);
                                                     intent.putExtra("rolUsuario", rol);
-                                                    Toast.makeText(getActivity(), "Inició sesión como "+rol, Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getActivity(), getString(R.string.rol_inicio_sesion)+" "+rol, Toast.LENGTH_SHORT).show();
                                                     startActivity(intent);
                                                     dismiss();
                                                 } else {
